@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: contact
+    description: Contact and demo requests
 paths:
   /healthz:
     get:
@@ -24,6 +26,43 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /contact/demo:
+    post:
+      operationId: submitContactRequest
+      tags: [contact]
+      summary: Submit a demo request
+      description: Sends a contact request to the Q4C Systèmes team by email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactRequestInput"
+      responses:
+        "202":
+          description: The request was sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactRequestResponse"
+        "400":
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "429":
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "502":
+          description: The email provider could not accept the request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +72,47 @@ components:
           type: string
       required:
         - status
+    ContactRequestInput:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 120
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        organization:
+          type: string
+          minLength: 2
+          maxLength: 160
+        interest:
+          type: string
+          enum: [Lexpia-Pro, HisabPro, Mizane, ecosysteme]
+        message:
+          type: string
+          maxLength: 2000
+        website:
+          type: string
+          maxLength: 200
+      required:
+        - name
+        - email
+        - organization
+    ContactRequestResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+      required:
+        - success
+    ApiError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
 

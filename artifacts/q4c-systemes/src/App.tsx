@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { ArrowDown, ArrowRight, ArrowUpRight, Check, FileText, Fingerprint, Languages, LockKeyhole, Menu, ScanLine, ShieldCheck, Sparkles, Workflow, X } from 'lucide-react';
 import { type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useSubmitContactRequest } from '@workspace/api-client-react';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -43,11 +44,31 @@ const products = [
 function DemoForm() {
   const [submitted, setSubmitted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const contactRequestMutation = useSubmitContactRequest();
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!event.currentTarget.reportValidity()) return;
-    setSubmitted(true);
+    const form = event.currentTarget;
+    if (!form.reportValidity()) return;
+
+    const formData = new FormData(form);
+    const interest = String(formData.get('interest') ?? '');
+
+    try {
+      await contactRequestMutation.mutateAsync({
+        data: {
+          name: String(formData.get('name') ?? '').trim(),
+          email: String(formData.get('email') ?? '').trim(),
+          organization: String(formData.get('organization') ?? '').trim(),
+          ...(interest ? { interest: interest as 'Lexpia-Pro' | 'HisabPro' | 'Mizane' | 'ecosysteme' } : {}),
+          message: String(formData.get('message') ?? '').trim(),
+          website: String(formData.get('website') ?? '').trim(),
+        },
+      });
+      setSubmitted(true);
+    } catch {
+      // React Query keeps the form data available so the visitor can retry.
+    }
   }
 
   function closeMenu() {
@@ -457,25 +478,25 @@ function DemoForm() {
               {submitted ? (
                 <div role="status" aria-live="polite" className="flex min-h-[390px] flex-col justify-center">
                   <span className="grid h-12 w-12 place-items-center border border-[#d9a274]/60 text-[#d9a274]"><Check size={21} /></span>
-                  <h3 className="mt-6 font-serif text-[26px] font-semibold tracking-[-.04em]">Votre demande est prête.</h3>
-                  <p className="mt-3 max-w-[380px] text-[13px] leading-[1.75] text-[#cad4cb]">Ce formulaire est une démonstration de l’interface : aucune demande n’a été envoyée ni enregistrée. La réception devra être reliée à un canal de contact une fois celui-ci fourni.</p>
-                  <button className="mt-7 w-fit border-b border-[#d9a274]/60 pb-1 text-[11px] font-semibold text-[#e9c09e] transition-colors hover:text-white" onClick={() => setSubmitted(false)} type="button" data-testid="button-reset-contact">Modifier les informations</button>
+                  <h3 className="mt-6 font-serif text-[26px] font-semibold tracking-[-.04em]">Votre demande a bien été envoyée.</h3>
+                  <p className="mt-3 max-w-[380px] text-[13px] leading-[1.75] text-[#cad4cb]">Merci pour votre intérêt. L’équipe Q4C Systèmes reviendra vers vous au sujet de votre demande de démonstration.</p>
+                  <button className="mt-7 w-fit border-b border-[#d9a274]/60 pb-1 text-[11px] font-semibold text-[#e9c09e] transition-colors hover:text-white" onClick={() => setSubmitted(false)} type="button" data-testid="button-reset-contact">Envoyer une autre demande</button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate>
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div>
                       <label htmlFor="contact-name" className="mb-2 block text-[11px] font-semibold text-[#e3e8df]">Nom et prénom <span aria-hidden="true" className="text-[#d9a274]">*</span></label>
-                      <input id="contact-name" name="name" type="text" autoComplete="name" required minLength={2} className="form-control" placeholder="Votre nom" data-testid="input-contact-name" />
+                      <input id="contact-name" name="name" type="text" autoComplete="name" required minLength={2} maxLength={120} className="form-control" placeholder="Votre nom" data-testid="input-contact-name" />
                     </div>
                     <div>
                       <label htmlFor="contact-email" className="mb-2 block text-[11px] font-semibold text-[#e3e8df]">Adresse e-mail <span aria-hidden="true" className="text-[#d9a274]">*</span></label>
-                      <input id="contact-email" name="email" type="email" autoComplete="email" required className="form-control" placeholder="nom@entreprise.ma" data-testid="input-contact-email" />
+                      <input id="contact-email" name="email" type="email" autoComplete="email" required maxLength={254} className="form-control" placeholder="nom@entreprise.ma" data-testid="input-contact-email" />
                     </div>
                   </div>
                   <div className="mt-5">
                     <label htmlFor="contact-organization" className="mb-2 block text-[11px] font-semibold text-[#e3e8df]">Cabinet ou entreprise <span aria-hidden="true" className="text-[#d9a274]">*</span></label>
-                    <input id="contact-organization" name="organization" type="text" autoComplete="organization" required minLength={2} className="form-control" placeholder="Nom de votre organisation" data-testid="input-contact-organization" />
+                    <input id="contact-organization" name="organization" type="text" autoComplete="organization" required minLength={2} maxLength={160} className="form-control" placeholder="Nom de votre organisation" data-testid="input-contact-organization" />
                   </div>
                   <div className="mt-5">
                     <label htmlFor="contact-interest" className="mb-2 block text-[11px] font-semibold text-[#e3e8df]">Solution qui vous intéresse</label>
@@ -489,10 +510,22 @@ function DemoForm() {
                   </div>
                   <div className="mt-5">
                     <label htmlFor="contact-message" className="mb-2 block text-[11px] font-semibold text-[#e3e8df]">Votre besoin <span className="font-normal text-[#a9b9ae]">(facultatif)</span></label>
-                    <textarea id="contact-message" name="message" rows={3} className="form-control resize-y" placeholder="Quelques mots sur votre contexte..." data-testid="textarea-contact-message" />
+                    <textarea id="contact-message" name="message" rows={3} maxLength={2000} className="form-control resize-y" placeholder="Quelques mots sur votre contexte..." data-testid="textarea-contact-message" />
                   </div>
-                  <button type="submit" className="button-main mt-6 w-full justify-between" data-testid="button-submit-contact">Demander une démo <ArrowRight size={16} /></button>
-                  <p className="mt-4 text-[10px] leading-[1.65] text-[#aebdb3]">Les champs marqués d’un astérisque sont requis. Aucune donnée ne sera envoyée ou enregistrée par cette démonstration. La réception devra être reliée à un canal de contact une fois celui-ci fourni.</p>
+                  <div aria-hidden="true" className="absolute -left-[10000px] h-px w-px overflow-hidden">
+                    <label htmlFor="contact-website">Ne pas remplir ce champ</label>
+                    <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+                  </div>
+                  {contactRequestMutation.isError && (
+                    <p className="mt-4 text-[12px] leading-[1.65] text-[#f2bba0]" role="alert">
+                      L’envoi n’a pas abouti. Vérifiez votre connexion et réessayez dans quelques instants.
+                    </p>
+                  )}
+                  <button type="submit" disabled={contactRequestMutation.isPending} aria-busy={contactRequestMutation.isPending} className="button-main mt-6 w-full justify-between disabled:cursor-wait disabled:opacity-70" data-testid="button-submit-contact">
+                    {contactRequestMutation.isPending ? 'Envoi en cours…' : 'Demander une démo'}
+                    <ArrowRight size={16} />
+                  </button>
+                  <p className="mt-4 text-[10px] leading-[1.65] text-[#aebdb3]">Les champs marqués d’un astérisque sont requis. Vos coordonnées seront utilisées pour donner suite à votre demande.</p>
                   <p className="sr-only" aria-live="polite" id="form-validation-note">La validation des champs est effectuée par votre navigateur.</p>
                 </form>
               )}
