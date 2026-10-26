@@ -518,7 +518,7 @@ function DemoForm() {
                   </div>
                   {contactRequestMutation.isError && (
                     <p className="mt-4 text-[12px] leading-[1.65] text-[#f2bba0]" role="alert">
-                      L’envoi n’a pas abouti. Vérifiez votre connexion et réessayez dans quelques instants.
+                      L’envoi automatique est indisponible pour le moment. Votre demande n’a pas été transmise. Réessayez plus tard.
                     </p>
                   )}
                   <button type="submit" disabled={contactRequestMutation.isPending} aria-busy={contactRequestMutation.isPending} className="button-main mt-6 w-full justify-between disabled:cursor-wait disabled:opacity-70" data-testid="button-submit-contact">
