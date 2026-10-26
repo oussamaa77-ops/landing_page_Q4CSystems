@@ -30,6 +30,11 @@ function encodeMimeMessage(message: string): string {
   return Buffer.from(message, "utf8").toString("base64url");
 }
 
+function encodeMimeBody(body: string): string {
+  const encoded = Buffer.from(body, "utf8").toString("base64");
+  return encoded.match(/.{1,76}/g)?.join("\r\n") ?? "";
+}
+
 router.post("/contact/demo", async (req, res): Promise<void> => {
   const parsed = SubmitContactRequestBody.safeParse(req.body);
   if (!parsed.success) {
@@ -86,7 +91,7 @@ router.post("/contact/demo", async (req, res): Promise<void> => {
     'Content-Type: text/plain; charset="UTF-8"',
     "Content-Transfer-Encoding: base64",
     "",
-    Buffer.from(body, "utf8").toString("base64"),
+    encodeMimeBody(body),
   ].join("\r\n");
 
   try {
