@@ -7,7 +7,7 @@ import {
 
 const router: IRouter = Router();
 const connectors = new ReplitConnectors();
-const recipient = process.env.Q4C_CONTACT_EMAIL ?? "oussamakarmaoui7@gmail.com";
+const recipient = process.env.Q4C_CONTACT_EMAIL ?? "oussamakarma099@gmail.com";
 const RATE_WINDOW_MS = 60 * 60 * 1000;
 const RATE_LIMIT = 5;
 const requestCounts = new Map<string, { count: number; resetAt: number }>();
