@@ -194,6 +194,15 @@
 .product-card:hover { transform: translateY(-7px); box-shadow: 0 24px 60px rgba(31,52,46,.1); border-color: rgba(168,95,60,.5); }
 .product-card:hover .product-arrow { transform: translate(4px,-4px); color: #a85f3c; }
 .product-arrow { transition: transform .25s ease, color .25s ease; }
+.preview-case { box-shadow: 0 12px 35px rgba(31,52,46,.035); }
+.preview-screen { min-width: 0; background-color: #e8e6db; background-image: linear-gradient(rgba(30,77,67,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(30,77,67,.045) 1px, transparent 1px); background-size: 22px 22px; }
+.preview-window { height: 100%; overflow: hidden; border: 1px solid rgba(30,77,67,.16); background: #fbfaf5; box-shadow: 0 12px 26px rgba(31,52,46,.08); }
+.preview-topbar { display: flex; min-height: 42px; align-items: center; justify-content: space-between; gap: 8px; border-bottom: 1px solid rgba(30,77,67,.12); padding: 0 12px; background: #f8f5ec; }
+.preview-window-label { flex: 0 0 auto; font: 700 6px/1.4 'Space Mono', monospace; letter-spacing: .08em; color: #9b6850; }
+.preview-document-wrap { display: grid; place-items: center; border-bottom: 1px solid rgba(30,77,67,.1); background: #f1efe5; padding: 14px; }
+.preview-document { width: min(100%, 205px); min-height: 202px; border: 1px solid rgba(30,77,67,.12); background: #fffdf7; padding: 13px; box-shadow: 0 4px 14px rgba(31,52,46,.06); }
+.doc-line { display: block; height: 3px; background: #d9d8ce; }
+.preview-case > div:first-child { min-width: 0; }
 .form-control { width: 100%; border: 1px solid rgba(222,215,201,.25); background: rgba(248,245,236,.06); color: #f8f5ec; border-radius: 2px; min-height: 48px; padding: 12px 14px; font: inherit; font-size: 13px; }
 .form-control::placeholder { color: rgba(248,245,236,.42); }
 .form-control:focus { border-color: #d9a274; outline: 2px solid rgba(217,162,116,.35); outline-offset: 1px; }
@@ -210,4 +219,6 @@
 }
 @media (max-width: 420px) {
   .q4c-container { width: calc(100% - 32px); }
+  .preview-window-label { font-size: 5px; }
+  .preview-topbar { padding: 0 8px; }
 }
