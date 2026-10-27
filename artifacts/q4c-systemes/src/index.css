@@ -213,6 +213,21 @@
 .form-control:focus { border-color: #d9a0ab; outline: 2px solid rgba(217,160,171,.35); outline-offset: 1px; }
 .form-control option { color: #2a2a2f; }
 
+.hero-card-link { z-index: 1; cursor: pointer; transition: border-color .25s ease, box-shadow .25s ease, background-color .25s ease; }
+.hero-card-link:hover, .hero-card-link:focus-visible { z-index: 2; border-color: rgba(109,26,43,.55); background: #fcfcff; box-shadow: 0 22px 55px rgba(109,26,43,.16); }
+.hero-card-link:focus-visible { outline: 3px solid #c04a62; outline-offset: 3px; }
+.hero-card-cta { display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 10px; color: #6d1a2b; font: 700 9px/1.3 'Space Mono', monospace; letter-spacing: .08em; text-transform: uppercase; opacity: .55; transition: opacity .25s ease, gap .25s ease; }
+.hero-card-link:hover .hero-card-cta, .hero-card-link:focus-visible .hero-card-cta { opacity: 1; gap: 8px; }
+.efacture-alert { transition: border-color .25s ease, background-color .25s ease, transform .25s ease; }
+.efacture-alert:hover { background: #f2e4e7; border-color: rgba(163,37,63,.55); transform: translateX(3px); }
+.efacture-alert .efacture-arrow { transition: transform .25s ease; }
+.efacture-alert:hover .efacture-arrow { transform: translateX(4px); }
+.efacture-pulse::before { content: ""; position: absolute; inset: -3px; border-radius: 999px; background: rgba(163,37,63,.35); animation: pulse-ring 1.8s ease-out infinite; }
+.preview-case { scroll-margin-top: 24px; }
+.preview-case:target { animation: target-flash 1.8s ease-out .4s both; }
+
+@keyframes pulse-ring { from { transform: scale(.6); opacity: 1; } to { transform: scale(2.2); opacity: 0; } }
+@keyframes target-flash { 0% { box-shadow: 0 0 0 0 rgba(163,37,63,0); border-color: rgba(109,26,43,.15); } 25% { box-shadow: 0 0 0 4px rgba(163,37,63,.25); border-color: #a3253f; } 100% { box-shadow: 0 0 0 0 rgba(163,37,63,0); border-color: rgba(109,26,43,.15); } }
 @keyframes orbit { to { transform: rotate(360deg); } }
 @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
 @keyframes rise-in { from { opacity: 0; transform: translateY(17px); } to { opacity: 1; transform: translateY(0); } }

@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, FileText, Fingerprint, Languages, LockKeyhole, Menu, ScanLine, ShieldCheck, Sparkles, TrendingUp, Workflow, X } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, FileCheck2, FileText, Fingerprint, Languages, LockKeyhole, Menu, ScanLine, ShieldCheck, Sparkles, TrendingUp, Workflow, X } from 'lucide-react';
 import { type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useSubmitContactRequest, type ContactRequestInputInterest } from '@workspace/api-client-react';
@@ -80,12 +80,12 @@ function DemoForm() {
       <header className="absolute inset-x-0 top-0 z-20 border-b border-[#6d1a2b]/10">
         <div className="q4c-container flex h-[78px] items-center justify-between">
           <a href="#accueil" aria-label="Q4C Systèmes, accueil" className="flex items-center gap-3">
-            <span className="grid h-[36px] w-[36px] place-items-center border border-[#6d1a2b]/25 text-[#6d1a2b]">
-              <span className="font-serif text-[15px] font-extrabold tracking-[-.12em]">Q4</span>
+            <span className="grid h-[36px] min-w-[44px] place-items-center border border-[#6d1a2b]/25 px-1 text-[#6d1a2b]">
+              <span className="font-serif text-[13px] font-extrabold tracking-[-.08em]">Q4C</span>
             </span>
             <span className="leading-tight">
-              <span className="block font-serif text-[15px] font-extrabold tracking-[-.04em] text-[#2b2b30]">Q4C</span>
-              <span className="block text-[8px] font-bold tracking-[.18em] text-[#737376]">SYSTÈMES</span>
+              <span className="block font-serif text-[15px] font-extrabold tracking-[-.04em] text-[#2b2b30]">Q4C Systèmes</span>
+              <span className="block text-[8px] font-bold tracking-[.18em] text-[#737376]">COMPTA · FINANCE · AUDIT</span>
             </span>
           </a>
           <nav aria-label="Navigation principale" className="hidden items-center gap-9 md:flex">
@@ -128,9 +128,17 @@ function DemoForm() {
                 Le chiffre,<br />
                 <span className="text-[#a3253f]">en mouvement.</span>
               </h1>
-              <p className="reveal reveal-3 mt-7 max-w-[490px] text-[16px] leading-[1.8] text-[#5e5e61] md:text-[17px]">
-                Q4C Systèmes automatise les processus comptables, financiers et d’audit des cabinets et des entreprises au Maroc. Moins de saisie et de tâches répétitives, plus de temps pour l’analyse et le conseil.
+              <p className="reveal reveal-3 mt-7 max-w-[530px] text-[15px] leading-[1.8] text-[#5e5e61] md:text-[16px]">
+                <strong className="font-semibold text-[#2b2b30]">Q4C Systèmes</strong> automatise et fluidifie les processus comptables, financiers et d’audit des cabinets et des entreprises au Maroc. Grâce à l’<strong className="font-semibold text-[#2b2b30]">intelligence artificielle</strong> et à l’<strong className="font-semibold text-[#2b2b30]">OCR</strong> adaptés au contexte réglementaire marocain, nous réduisons la saisie et les tâches répétitives pour libérer du temps dédié à l’analyse, au conseil stratégique et à la <strong className="font-semibold text-[#6d1a2b]">conformité</strong>.
               </p>
+              <a href="#contact" className="efacture-alert reveal reveal-3 mt-6 flex max-w-[530px] items-center gap-3 border border-[#a3253f]/30 border-l-[3px] border-l-[#6d1a2b] bg-[#f4f4f7]/80 px-4 py-3" data-testid="link-efacture-hero">
+                <span className="efacture-pulse relative grid h-2.5 w-2.5 shrink-0 place-items-center"><span className="h-2 w-2 rounded-full bg-[#a3253f]" /></span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-mono text-[9px] font-bold tracking-[.13em] text-[#a3253f]">ACTUALITÉ · MAROC</span>
+                  <span className="mt-0.5 block text-[13px] font-semibold leading-snug text-[#2b2b30]">Facture électronique : préparez dès maintenant vos flux de facturation.</span>
+                </span>
+                <ArrowRight size={15} className="efacture-arrow shrink-0 text-[#6d1a2b]" />
+              </a>
               <div className="reveal reveal-3 mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
                 <a className="button-main" href="#contact" data-testid="link-demo-hero">Demander une démo <ArrowRight size={16} /></a>
                 <a className="inline-flex items-center gap-2 text-[12px] font-semibold text-[#505056] transition-colors hover:text-[#a3253f]" href="#solutions" data-testid="link-explore-solutions">
@@ -142,7 +150,7 @@ function DemoForm() {
               </div>
             </div>
 
-            <div className="relative mx-auto grid w-full max-w-[535px] gap-3 md:block md:h-[530px]" aria-label="Nos trois domaines : automatisation comptable, pilotage financier, audit et contrôle" role="img">
+            <div className="relative mx-auto grid w-full max-w-[535px] gap-3 md:block md:h-[530px]" aria-label="Nos trois domaines : comptabilité, finance, audit" role="group">
               <div className="absolute inset-[7%] hidden rounded-full border border-[#6d1a2b]/15 md:block" />
               <div className="absolute inset-[16%] hidden rounded-full border border-dashed border-[#a3253f]/30 md:block" />
               <div className="hero-orbit absolute inset-[7%] hidden rounded-full border border-transparent border-t-[#a3253f]/55 md:block">
@@ -151,12 +159,12 @@ function DemoForm() {
               <div className="absolute left-1/2 top-1/2 hidden h-[205px] w-[205px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-[#6d1a2b]/15 bg-[#f4f4f7]/70 shadow-[0_25px_80px_rgba(30,30,35,.08)] md:grid">
                 <div className="absolute inset-[17px] rounded-full border border-[#6d1a2b]/10" />
                 <div className="relative text-center">
-                  <div className="mx-auto mb-3 grid h-12 w-12 place-items-center bg-[#6d1a2b] text-[#f4f4f7]"><span className="font-serif text-lg font-bold tracking-[-.1em]">Q4</span></div>
+                  <div className="mx-auto mb-3 grid h-12 min-w-[56px] w-fit px-2 place-items-center bg-[#6d1a2b] text-[#f4f4f7]"><span className="font-serif text-[15px] font-bold tracking-[-.08em]">Q4C</span></div>
                   <span className="block text-[9px] font-bold uppercase tracking-[.19em] text-[#7c7c7f]">Automatiser</span>
                   <span className="mt-1 block font-serif text-[18px] font-semibold tracking-[-.04em] text-[#2b2b30]">le chiffre</span>
                 </div>
               </div>
-              <div className="hero-float hero-card relative md:absolute md:left-0 md:top-[9%] md:w-[205px]">
+              <a href="#lexpia-pro" className="hero-float hero-card hero-card-link relative block md:absolute md:left-0 md:top-[9%] md:w-[205px]" aria-label="Comptabilité — voir Lexpia-Pro" data-testid="link-hero-lexpia-pro">
                 <div className="flex items-center justify-between">
                   <span className="grid h-8 w-8 place-items-center bg-[#dedee1] text-[#6d1a2b]"><ScanLine size={15} /></span>
                   <span className="font-mono text-[9px] text-[#a3253f]">01 / AUTOMATISATION</span>
@@ -167,8 +175,10 @@ function DemoForm() {
                   <span className="doc-line w-[72%]" /><span className="doc-line mt-1.5 w-[46%]" />
                   <span className="hero-scan absolute inset-y-0 w-8 bg-gradient-to-r from-transparent via-[#d9a0ab]/50 to-transparent" />
                 </div>
-              </div>
-              <div className="hero-float-delay hero-card relative md:absolute md:right-[-2%] md:top-[31%] md:w-[200px]">
+                <span className="mt-3 flex items-center gap-1.5 border border-[#6d1a2b]/20 bg-[#f2e4e7] px-2 py-1 font-mono text-[8px] font-bold tracking-[.04em] text-[#6d1a2b]"><FileCheck2 size={11} className="shrink-0" />PRÊT · FACTURE ÉLECTRONIQUE</span>
+                <span className="hero-card-cta">Voir Lexpia-Pro <ArrowRight size={11} /></span>
+              </a>
+              <a href="#hisabpro" className="hero-float-delay hero-card hero-card-link relative block md:absolute md:right-[-2%] md:top-[31%] md:w-[200px]" aria-label="Finance — voir HisabPro" data-testid="link-hero-hisabpro">
                 <div className="flex items-center justify-between">
                   <span className="grid h-8 w-8 place-items-center bg-[#e1e1e4] text-[#6d1a2b]"><TrendingUp size={15} /></span>
                   <span className="font-mono text-[9px] text-[#a3253f]">02 / PILOTAGE</span>
@@ -178,8 +188,9 @@ function DemoForm() {
                 <div className="mt-3 flex h-7 items-end gap-1">
                   {['#c7c7ca', '#9e9ea1', '#d9a0ab', '#6d1a2b', '#9e9ea1', '#6d1a2b'].map((color, i) => <span key={i} className="hero-bar h-full w-3" style={{ backgroundColor: color, animationDelay: `${i * 0.25}s` }} />)}
                 </div>
-              </div>
-              <div className="hero-float hero-card relative md:absolute md:bottom-[4%] md:left-[20%] md:w-[210px]">
+                <span className="hero-card-cta">Voir HisabPro <ArrowRight size={11} /></span>
+              </a>
+              <a href="#mizane" className="hero-float hero-card hero-card-link relative block md:absolute md:bottom-[4%] md:left-[20%] md:w-[210px]" aria-label="Audit — voir Mizane" data-testid="link-hero-mizane">
                 <div className="flex items-center justify-between">
                   <span className="grid h-8 w-8 place-items-center bg-[#efdfe3] text-[#a3253f]"><ShieldCheck size={15} /></span>
                   <span className="font-mono text-[9px] text-[#a3253f]">03 / CONTRÔLE</span>
@@ -189,7 +200,8 @@ function DemoForm() {
                 <div className="mt-3 flex h-7 items-center gap-2">
                   {[0, 1, 2].map((i) => <span key={i} className="flex flex-1 items-center gap-1.5"><span className="hero-check grid h-3.5 w-3.5 shrink-0 place-items-center border border-[#a3253f]/60 text-[#a3253f]" style={{ animationDelay: `${i * 0.6}s` }}><Check size={9} strokeWidth={3} /></span><span className="h-[3px] flex-1 bg-[#dddde0]" /></span>)}
                 </div>
-              </div>
+                <span className="hero-card-cta">Voir Mizane <ArrowRight size={11} /></span>
+              </a>
               <span className="absolute right-[15%] top-[3%] hidden font-mono text-[9px] tracking-[.12em] text-[#7d7d80] md:block">MAROC · SECTEUR DU CHIFFRE</span>
               <span className="absolute bottom-[-2%] right-[3%] hidden font-mono text-[9px] tracking-[.12em] text-[#7d7d80] md:block">COMPTA / FINANCE / AUDIT</span>
             </div>
@@ -250,7 +262,7 @@ function DemoForm() {
             </p>
 
             <div className="mt-12 space-y-7 md:mt-16">
-              <article className="preview-case grid overflow-hidden border border-[#6d1a2b]/15 bg-[#f4f4f7] lg:grid-cols-[.78fr_1.22fr]" aria-labelledby="preview-lexpia-title">
+              <article id="lexpia-pro" className="preview-case grid overflow-hidden border border-[#6d1a2b]/15 bg-[#f4f4f7] lg:grid-cols-[.78fr_1.22fr]" aria-labelledby="preview-lexpia-title">
                 <div className="flex flex-col justify-center p-6 md:p-9 lg:p-11">
                   <span className="font-mono text-[9px] tracking-[.14em] text-[#a3253f]">01 / TRAITEMENT DE PIÈCE</span>
                   <h3 id="preview-lexpia-title" className="mt-4 font-serif text-[29px] font-semibold tracking-[-.045em] text-[#2b2b30]">Lexpia-Pro</h3>
@@ -295,7 +307,7 @@ function DemoForm() {
                 </div>
               </article>
 
-              <article className="preview-case grid overflow-hidden border border-[#6d1a2b]/15 bg-[#f4f4f7] lg:grid-cols-[.78fr_1.22fr]" aria-labelledby="preview-hisab-title">
+              <article id="hisabpro" className="preview-case grid overflow-hidden border border-[#6d1a2b]/15 bg-[#f4f4f7] lg:grid-cols-[.78fr_1.22fr]" aria-labelledby="preview-hisab-title">
                 <div className="flex flex-col justify-center p-6 md:p-9 lg:order-2 lg:p-11">
                   <span className="font-mono text-[9px] tracking-[.14em] text-[#a3253f]">02 / GESTION & PILOTAGE</span>
                   <h3 id="preview-hisab-title" className="mt-4 font-serif text-[29px] font-semibold tracking-[-.045em] text-[#2b2b30]">HisabPro</h3>
@@ -331,7 +343,7 @@ function DemoForm() {
                 </div>
               </article>
 
-              <article className="preview-case grid overflow-hidden border border-[#6d1a2b]/15 bg-[#f4f4f7] lg:grid-cols-[.78fr_1.22fr]" aria-labelledby="preview-mizane-title">
+              <article id="mizane" className="preview-case grid overflow-hidden border border-[#6d1a2b]/15 bg-[#f4f4f7] lg:grid-cols-[.78fr_1.22fr]" aria-labelledby="preview-mizane-title">
                 <div className="flex flex-col justify-center p-6 md:p-9 lg:p-11">
                   <span className="font-mono text-[9px] tracking-[.14em] text-[#a3253f]">03 / ANALYSE & AUDIT</span>
                   <h3 id="preview-mizane-title" className="mt-4 font-serif text-[29px] font-semibold tracking-[-.045em] text-[#2b2b30]">Mizane</h3>
@@ -545,8 +557,8 @@ function DemoForm() {
         <div className="q4c-container grid gap-10 py-12 md:grid-cols-[1fr_auto] md:items-end">
           <div>
             <a href="#accueil" className="inline-flex items-center gap-3" data-testid="link-footer-home">
-              <span className="grid h-[36px] w-[36px] place-items-center border border-[#d9a0ab]/50 text-[#d9a0ab]"><span className="font-serif text-[15px] font-extrabold tracking-[-.12em]">Q4</span></span>
-              <span className="leading-tight"><span className="block font-serif text-[15px] font-extrabold tracking-[-.04em]">Q4C</span><span className="block text-[8px] font-bold tracking-[.18em] text-[#bbbbbe]">SYSTÈMES</span></span>
+              <span className="grid h-[36px] min-w-[44px] place-items-center border border-[#d9a0ab]/50 px-1 text-[#d9a0ab]"><span className="font-serif text-[13px] font-extrabold tracking-[-.08em]">Q4C</span></span>
+              <span className="leading-tight"><span className="block font-serif text-[15px] font-extrabold tracking-[-.04em]">Q4C Systèmes</span><span className="block text-[8px] font-bold tracking-[.18em] text-[#bbbbbe]">COMPTA · FINANCE · AUDIT</span></span>
             </a>
             <p className="mt-5 max-w-[420px] text-[11px] leading-[1.75] text-[#b6b6b9]">Éditeur marocain de logiciels pour la finance, la comptabilité et l’audit.</p>
           </div>
