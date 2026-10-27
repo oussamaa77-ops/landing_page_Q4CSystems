@@ -1,8 +1,8 @@
 import { useState, type FormEvent } from 'react';
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, FileText, Fingerprint, Languages, LockKeyhole, Menu, ScanLine, ShieldCheck, Sparkles, Workflow, X } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, FileText, Fingerprint, Languages, LockKeyhole, Menu, ScanLine, ShieldCheck, Sparkles, TrendingUp, Workflow, X } from 'lucide-react';
 import { type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useSubmitContactRequest } from '@workspace/api-client-react';
+import { useSubmitContactRequest, type ContactRequestInputInterest } from '@workspace/api-client-react';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -60,7 +60,7 @@ function DemoForm() {
           name: String(formData.get('name') ?? '').trim(),
           email: String(formData.get('email') ?? '').trim(),
           organization: String(formData.get('organization') ?? '').trim(),
-          ...(interest ? { interest: interest as 'Lexpia-Pro' | 'HisabPro' | 'Mizane' | 'ecosysteme' } : {}),
+          ...(interest ? { interest: interest as ContactRequestInputInterest } : {}),
           message: String(formData.get('message') ?? '').trim(),
           website: String(formData.get('website') ?? '').trim(),
         },
@@ -129,7 +129,7 @@ function DemoForm() {
                 <span className="text-[#a85f3c]">en mouvement.</span>
               </h1>
               <p className="reveal reveal-3 mt-7 max-w-[490px] text-[16px] leading-[1.8] text-[#52665f] md:text-[17px]">
-                Q4C Systèmes accélère la transformation digitale des cabinets comptables et des entreprises au Maroc. Avec Lexpia-Pro, HisabPro et Mizane, chaque étape du travail du chiffre gagne en fluidité et en lisibilité.
+                Q4C Systèmes automatise les processus comptables, financiers et d’audit des cabinets et des entreprises au Maroc. Moins de saisie et de tâches répétitives, plus de temps pour l’analyse et le conseil.
               </p>
               <div className="reveal reveal-3 mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
                 <a className="button-main" href="#contact" data-testid="link-demo-hero">Demander une démo <ArrowRight size={16} /></a>
@@ -142,49 +142,56 @@ function DemoForm() {
               </div>
             </div>
 
-            <div className="relative mx-auto h-[420px] w-full max-w-[535px] md:h-[530px]" aria-label="Illustration abstraite de l’écosystème Q4C" role="img">
-              <div className="absolute inset-[7%] rounded-full border border-[#1e4d43]/15" />
-              <div className="absolute inset-[16%] rounded-full border border-dashed border-[#a85f3c]/30" />
-              <div className="hero-orbit absolute inset-[7%] rounded-full border border-transparent border-t-[#a85f3c]/55">
+            <div className="relative mx-auto grid w-full max-w-[535px] gap-3 md:block md:h-[530px]" aria-label="Nos trois domaines : automatisation comptable, pilotage financier, audit et contrôle" role="img">
+              <div className="absolute inset-[7%] hidden rounded-full border border-[#1e4d43]/15 md:block" />
+              <div className="absolute inset-[16%] hidden rounded-full border border-dashed border-[#a85f3c]/30 md:block" />
+              <div className="hero-orbit absolute inset-[7%] hidden rounded-full border border-transparent border-t-[#a85f3c]/55 md:block">
                 <span className="absolute left-[13%] top-[7%] h-2 w-2 rounded-full bg-[#a85f3c]" />
               </div>
-              <div className="absolute left-1/2 top-1/2 grid h-[205px] w-[205px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-[#1e4d43]/15 bg-[#f8f5ec]/70 shadow-[0_25px_80px_rgba(33,65,56,.08)]">
+              <div className="absolute left-1/2 top-1/2 hidden h-[205px] w-[205px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-[#1e4d43]/15 bg-[#f8f5ec]/70 shadow-[0_25px_80px_rgba(33,65,56,.08)] md:grid">
                 <div className="absolute inset-[17px] rounded-full border border-[#1e4d43]/10" />
                 <div className="relative text-center">
                   <div className="mx-auto mb-3 grid h-12 w-12 place-items-center bg-[#1e4d43] text-[#f8f5ec]"><span className="font-serif text-lg font-bold tracking-[-.1em]">Q4</span></div>
-                  <span className="block text-[9px] font-bold uppercase tracking-[.19em] text-[#75827a]">Écosystème</span>
-                  <span className="mt-1 block font-serif text-[18px] font-semibold tracking-[-.04em] text-[#173a34]">du chiffre</span>
+                  <span className="block text-[9px] font-bold uppercase tracking-[.19em] text-[#75827a]">Automatiser</span>
+                  <span className="mt-1 block font-serif text-[18px] font-semibold tracking-[-.04em] text-[#173a34]">le chiffre</span>
                 </div>
               </div>
-              <div className="hero-float absolute left-[1%] top-[18%] w-[177px] border border-[#1e4d43]/15 bg-[#faf8f1] p-4 shadow-[0_16px_45px_rgba(33,65,56,.09)] md:left-0 md:w-[196px]">
+              <div className="hero-float hero-card relative md:absolute md:left-0 md:top-[9%] md:w-[205px]">
                 <div className="flex items-center justify-between">
                   <span className="grid h-8 w-8 place-items-center bg-[#e6dfd0] text-[#1e4d43]"><ScanLine size={15} /></span>
-                  <span className="font-mono text-[9px] text-[#a85f3c]">01 / IA + OCR</span>
+                  <span className="font-mono text-[9px] text-[#a85f3c]">01 / AUTOMATISATION</span>
                 </div>
-                <p className="mt-4 font-serif text-[17px] font-semibold text-[#173a34]">Lexpia-Pro</p>
-                <p className="mt-1 text-[10px] text-[#718078]">Pièces comptables</p>
-                <div className="mt-4 flex gap-1.5"><span className="h-[3px] w-[49%] bg-[#1e4d43]" /><span className="h-[3px] w-[24%] bg-[#d9a274]" /><span className="h-[3px] flex-1 bg-[#e2ded3]" /></div>
+                <p className="mt-3 font-serif text-[17px] font-semibold text-[#173a34]">Comptabilité</p>
+                <ul className="mt-2 flex flex-wrap gap-1">{['Saisie OCR', 'Lettrage', 'Rapprochement', 'TVA'].map((op) => <li key={op} className="hero-chip">{op}</li>)}</ul>
+                <div className="relative mt-3 h-7 overflow-hidden border border-[#1e4d43]/10 bg-[#fffdf7] px-2 py-[7px]">
+                  <span className="doc-line w-[72%]" /><span className="doc-line mt-1.5 w-[46%]" />
+                  <span className="hero-scan absolute inset-y-0 w-8 bg-gradient-to-r from-transparent via-[#d9a274]/50 to-transparent" />
+                </div>
               </div>
-              <div className="hero-float-delay absolute right-[-1%] top-[35%] w-[174px] border border-[#1e4d43]/15 bg-[#faf8f1] p-4 shadow-[0_16px_45px_rgba(33,65,56,.09)] md:right-[-2%] md:w-[194px]">
+              <div className="hero-float-delay hero-card relative md:absolute md:right-[-2%] md:top-[31%] md:w-[200px]">
                 <div className="flex items-center justify-between">
-                  <span className="grid h-8 w-8 place-items-center bg-[#dce6dc] text-[#1e4d43]"><Workflow size={15} /></span>
+                  <span className="grid h-8 w-8 place-items-center bg-[#dce6dc] text-[#1e4d43]"><TrendingUp size={15} /></span>
                   <span className="font-mono text-[9px] text-[#a85f3c]">02 / PILOTAGE</span>
                 </div>
-                <p className="mt-4 font-serif text-[17px] font-semibold text-[#173a34]">HisabPro</p>
-                <p className="mt-1 text-[10px] text-[#718078]">Gestion comptable</p>
-                <div className="mt-4 flex items-end gap-1"><span className="h-3 w-3 bg-[#bdcfc2]" /><span className="h-5 w-3 bg-[#8da99b]" /><span className="h-4 w-3 bg-[#d9a274]" /><span className="h-7 w-3 bg-[#1e4d43]" /><span className="h-5 w-3 bg-[#8da99b]" /></div>
-              </div>
-              <div className="hero-float absolute bottom-[9%] left-[18%] w-[188px] border border-[#1e4d43]/15 bg-[#faf8f1] p-4 shadow-[0_16px_45px_rgba(33,65,56,.09)] md:bottom-[7%] md:left-[22%] md:w-[205px]">
-                <div className="flex items-center justify-between">
-                  <span className="grid h-8 w-8 place-items-center bg-[#f0e2d6] text-[#a85f3c]"><FileText size={15} /></span>
-                  <span className="font-mono text-[9px] text-[#a85f3c]">03 / ANALYSE</span>
+                <p className="mt-3 font-serif text-[17px] font-semibold text-[#173a34]">Finance</p>
+                <ul className="mt-2 flex flex-wrap gap-1">{['Reporting', 'Trésorerie', 'Budget vs réalisé'].map((op) => <li key={op} className="hero-chip">{op}</li>)}</ul>
+                <div className="mt-3 flex h-7 items-end gap-1">
+                  {['#bdcfc2', '#8da99b', '#d9a274', '#1e4d43', '#8da99b', '#1e4d43'].map((color, i) => <span key={i} className="hero-bar h-full w-3" style={{ backgroundColor: color, animationDelay: `${i * 0.25}s` }} />)}
                 </div>
-                <p className="mt-4 font-serif text-[17px] font-semibold text-[#173a34]">Mizane</p>
-                <p className="mt-1 text-[10px] text-[#718078]">Audit & synthèse</p>
-                <div className="mt-4 flex items-center gap-2"><span className="h-px flex-1 bg-[#d6d2c8]" /><span className="h-2 w-2 rounded-full border border-[#a85f3c]" /><span className="h-px w-7 bg-[#d6d2c8]" /></div>
               </div>
-              <span className="absolute right-[15%] top-[9%] font-mono text-[9px] tracking-[.12em] text-[#74847b]">MAROC · SECTEUR DU CHIFFRE</span>
-              <span className="absolute bottom-[4%] right-[3%] font-mono text-[9px] tracking-[.12em] text-[#74847b]">FLUX / CLARTÉ / DÉCISION</span>
+              <div className="hero-float hero-card relative md:absolute md:bottom-[4%] md:left-[20%] md:w-[210px]">
+                <div className="flex items-center justify-between">
+                  <span className="grid h-8 w-8 place-items-center bg-[#f0e2d6] text-[#a85f3c]"><ShieldCheck size={15} /></span>
+                  <span className="font-mono text-[9px] text-[#a85f3c]">03 / CONTRÔLE</span>
+                </div>
+                <p className="mt-3 font-serif text-[17px] font-semibold text-[#173a34]">Audit</p>
+                <ul className="mt-2 flex flex-wrap gap-1">{['Revue analytique', 'Anomalies', 'Rapports de synthèse'].map((op) => <li key={op} className="hero-chip">{op}</li>)}</ul>
+                <div className="mt-3 flex h-7 items-center gap-2">
+                  {[0, 1, 2].map((i) => <span key={i} className="flex flex-1 items-center gap-1.5"><span className="hero-check grid h-3.5 w-3.5 shrink-0 place-items-center border border-[#a85f3c]/60 text-[#a85f3c]" style={{ animationDelay: `${i * 0.6}s` }}><Check size={9} strokeWidth={3} /></span><span className="h-[3px] flex-1 bg-[#e2ded3]" /></span>)}
+                </div>
+              </div>
+              <span className="absolute right-[15%] top-[3%] hidden font-mono text-[9px] tracking-[.12em] text-[#74847b] md:block">MAROC · SECTEUR DU CHIFFRE</span>
+              <span className="absolute bottom-[-2%] right-[3%] hidden font-mono text-[9px] tracking-[.12em] text-[#74847b] md:block">COMPTA / FINANCE / AUDIT</span>
             </div>
           </div>
           <div className="absolute bottom-0 left-0 right-0 h-px bg-[#1e4d43]/15" />
@@ -499,13 +506,13 @@ function DemoForm() {
                     <input id="contact-organization" name="organization" type="text" autoComplete="organization" required minLength={2} maxLength={160} className="form-control" placeholder="Nom de votre organisation" data-testid="input-contact-organization" />
                   </div>
                   <div className="mt-5">
-                    <label htmlFor="contact-interest" className="mb-2 block text-[11px] font-semibold text-[#e3e8df]">Solution qui vous intéresse</label>
+                    <label htmlFor="contact-interest" className="mb-2 block text-[11px] font-semibold text-[#e3e8df]">Domaine qui vous intéresse</label>
                     <select id="contact-interest" name="interest" defaultValue="" className="form-control" data-testid="select-contact-interest">
-                      <option value="">Choisir une solution</option>
-                      <option value="Lexpia-Pro">Lexpia-Pro</option>
-                      <option value="HisabPro">HisabPro</option>
-                      <option value="Mizane">Mizane</option>
-                      <option value="ecosysteme">L’écosystème Q4C</option>
+                      <option value="">Choisir un domaine</option>
+                      <option value="comptabilite">Automatisation comptable</option>
+                      <option value="finance">Pilotage financier</option>
+                      <option value="audit">Audit & contrôle</option>
+                      <option value="autre">Autre / plusieurs domaines</option>
                     </select>
                   </div>
                   <div className="mt-5">

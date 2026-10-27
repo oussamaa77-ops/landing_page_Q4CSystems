@@ -10,8 +10,8 @@ export type ContactRequestInputInterest = typeof ContactRequestInputInterest[key
 
 
 export const ContactRequestInputInterest = {
-  'Lexpia-Pro': 'Lexpia-Pro',
-  HisabPro: 'HisabPro',
-  Mizane: 'Mizane',
-  ecosysteme: 'ecosysteme',
+  comptabilite: 'comptabilite',
+  finance: 'finance',
+  audit: 'audit',
+  autre: 'autre',
 } as const;

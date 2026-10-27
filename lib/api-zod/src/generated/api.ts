@@ -18,7 +18,7 @@ export const HealthCheckResponse = zod.object({
 
 
 /**
- * Sends a contact request to the Q4C Systèmes team by email
+ * Records a demo request and notifies the Q4C Systèmes team by email
  * @summary Submit a demo request
  */
 export const submitContactRequestBodyNameMin = 2;
@@ -39,7 +39,7 @@ export const SubmitContactRequestBody = zod.object({
   "name": zod.string().min(submitContactRequestBodyNameMin).max(submitContactRequestBodyNameMax),
   "email": zod.string().email().max(submitContactRequestBodyEmailMax),
   "organization": zod.string().min(submitContactRequestBodyOrganizationMin).max(submitContactRequestBodyOrganizationMax),
-  "interest": zod.enum(['Lexpia-Pro', 'HisabPro', 'Mizane', 'ecosysteme']).optional(),
+  "interest": zod.enum(['comptabilite', 'finance', 'audit', 'autre']).optional(),
   "message": zod.string().max(submitContactRequestBodyMessageMax).optional(),
   "website": zod.string().max(submitContactRequestBodyWebsiteMax).optional()
 })

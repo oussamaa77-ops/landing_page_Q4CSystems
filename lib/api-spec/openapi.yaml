@@ -31,7 +31,7 @@ paths:
       operationId: submitContactRequest
       tags: [contact]
       summary: Submit a demo request
-      description: Sends a contact request to the Q4C Systèmes team by email
+      description: Records a demo request and notifies the Q4C Systèmes team by email
       requestBody:
         required: true
         content:
@@ -40,7 +40,7 @@ paths:
               $ref: "#/components/schemas/ContactRequestInput"
       responses:
         "202":
-          description: The request was sent
+          description: The request was recorded
           content:
             application/json:
               schema:
@@ -58,7 +58,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ApiError"
         "502":
-          description: The email provider could not accept the request
+          description: The request could neither be stored nor sent by email
           content:
             application/json:
               schema:
@@ -90,7 +90,7 @@ components:
           maxLength: 160
         interest:
           type: string
-          enum: [Lexpia-Pro, HisabPro, Mizane, ecosysteme]
+          enum: [comptabilite, finance, audit, autre]
         message:
           type: string
           maxLength: 2000

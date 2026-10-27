@@ -169,7 +169,7 @@ export const getSubmitContactRequestUrl = () => {
 }
 
 /**
- * Sends a contact request to the Q4C Systèmes team by email
+ * Records a demo request and notifies the Q4C Systèmes team by email
  * @summary Submit a demo request
  */
 export const submitContactRequest = async (contactRequestInput: ContactRequestInput, options?: Parameters<typeof customFetch>[1]): Promise<ContactRequestResponse> => {
