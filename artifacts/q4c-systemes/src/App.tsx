@@ -3,6 +3,7 @@ import { ArrowDown, ArrowRight, ArrowUpRight, Check, FileCheck2, FileText, Finge
 import { type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useSubmitContactRequest, type ContactRequestInputInterest } from '@workspace/api-client-react';
+import { AppShowcase } from "@/components/app-showcase";
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -90,6 +91,7 @@ function DemoForm() {
           </a>
           <nav aria-label="Navigation principale" className="hidden items-center gap-9 md:flex">
             <a className="nav-link" href="#solutions">Solutions</a>
+            <a className="nav-link" href="#demo">Démo</a>
             <a className="nav-link" href="#approche">Notre approche</a>
             <a className="nav-link" href="#recherche">À propos</a>
           </nav>
@@ -111,6 +113,7 @@ function DemoForm() {
           <nav aria-label="Navigation mobile" className="border-t border-[#6d1a2b]/10 bg-[#f4f4f7] px-5 py-5 md:hidden">
             <div className="mx-auto flex max-w-[560px] flex-col gap-5">
               <a className="nav-link" href="#solutions" onClick={closeMenu}>Solutions</a>
+              <a className="nav-link" href="#demo" onClick={closeMenu}>Démo</a>
               <a className="nav-link" href="#approche" onClick={closeMenu}>Notre approche</a>
               <a className="nav-link" href="#recherche" onClick={closeMenu}>À propos</a>
               <a className="button-main mt-1 w-full" href="#contact" onClick={closeMenu} data-testid="link-demo-mobile">Demander une démo <ArrowUpRight size={15} /></a>
@@ -386,7 +389,22 @@ function DemoForm() {
           </div>
         </section>
 
-        <section id="approche" className="relative bg-[#2b2b30] py-24 text-[#f4f4f7] md:py-32">
+        <section id="demo" className="relative overflow-hidden bg-[#f4f4f7] py-24 md:py-32" aria-labelledby="demo-heading">
+          <div className="q4c-container grid items-center gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-16">
+            <div>
+              <div className="eyebrow">DÉMONSTRATION · MVP</div>
+              <h2 id="demo-heading" className="section-heading mt-5 max-w-[400px]">Nos applications,<br /><em>en action.</em></h2>
+              <p className="mt-6 max-w-[400px] text-[14px] leading-[1.85] text-[#6a6a6d]">Un aperçu des écrans de Lexpia-Pro, HisabPro et Mizane : de la lecture d’une pièce au rapport de synthèse, en passant par le suivi des dossiers.</p>
+              <ul className="mt-7 space-y-2.5 text-[12px] text-[#4a4a50]">
+                {['Défilement automatique, pause au survol', 'Navigation par onglets, flèches ou glissement', 'Interfaces issues de nos MVP'].map((item) => <li key={item} className="flex items-center gap-3"><span className="h-px w-5 bg-[#a3253f]" />{item}</li>)}
+              </ul>
+              <a className="button-main mt-9" href="#contact" data-testid="link-demo-showcase">Demander une démo complète <ArrowRight size={16} /></a>
+            </div>
+            <AppShowcase />
+          </div>
+        </section>
+
+        <section id="approche"className="relative bg-[#2b2b30] py-24 text-[#f4f4f7] md:py-32">
           <div className="absolute right-[-100px] top-[-90px] h-[370px] w-[370px] rounded-full border border-[#f4f4f7]/10" />
           <div className="absolute right-[-28px] top-[-18px] h-[220px] w-[220px] rounded-full border border-dashed border-[#d9a0ab]/30" />
           <div className="q4c-container relative">
