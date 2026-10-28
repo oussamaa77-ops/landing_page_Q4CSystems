@@ -3,15 +3,14 @@ import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 
 type Layout = 'document' | 'ocr' | 'bilingual' | 'dashboard' | 'workspace' | 'entries' | 'chart' | 'ratios' | 'report';
 
-type Frame = { title: string; caption: string; layout: Layout };
+// One frame per screen, referenced by its file name in /public/screenshots (exact spelling and case: the host is case-sensitive).
+// Frames play in the order listed. A missing or unreadable file falls back to a placeholder drawn with `layout`.
+type Frame = { file: string; title: string; caption: string; layout?: Layout };
 
 type ShowcaseApp = {
   product: string;
   initial: string;
   label: string;
-  // Files placed in /public/screenshots. The frame at the same position uses images[i];
-  // a missing or unreadable file falls back to the placeholder screen of that frame.
-  images: string[];
   frames: Frame[];
 };
 
@@ -20,33 +19,35 @@ const apps: ShowcaseApp[] = [
     product: 'Lexpia-Pro',
     initial: 'L',
     label: 'Traitement intelligent & OCR',
-    images: ['/screenshots/lexpia-1.png', '/screenshots/lexpia-2.png', '/screenshots/lexpia-3.png'],
     frames: [
-      { title: 'Document brut', caption: 'La facture ou la pièce comptable telle qu’elle est importée.', layout: 'document' },
-      { title: 'Reconnaissance OCR', caption: 'Lecture automatique et extraction des données clés de la pièce.', layout: 'ocr' },
-      { title: 'Transcription & validation', caption: 'Transcription bilingue arabe / français, puis validation avant saisie.', layout: 'bilingual' },
+      { file: 'lexpia_dashboard.PNG', title: 'Tableau de bord', caption: 'Vue d’ensemble des dossiers et de l’activité en cours.', layout: 'dashboard' },
+      { file: 'lexpia_rapport.PNG', title: 'Rapport', caption: 'Rédaction et révision du rapport, avec son plan, ses pièces et l’export PDF ou Word.', layout: 'report' },
+      { file: 'lexpia_assistant_ia.PNG', title: 'Assistant IA', caption: 'Un assistant qui répond à partir des documents du dossier, en arabe comme en français.', layout: 'bilingual' },
     ],
   },
   {
-    product: 'HisabPro',
-    initial: 'H',
+    product: 'Clarity',
+    initial: 'C',
     label: 'Gestion & pilotage',
-    images: ['/screenshots/hisab-1.png', '/screenshots/hisab-2.png', '/screenshots/hisab-3.png'],
     frames: [
-      { title: 'Tableau de bord', caption: 'Vue d’ensemble et suivi de l’avancement des dossiers.', layout: 'dashboard' },
-      { title: 'Espace de travail', caption: 'L’espace comptable où s’organisent pièces, tâches et échéances.', layout: 'workspace' },
-      { title: 'Écritures & états', caption: 'Liste des écritures et états comptables, filtrables par dossier.', layout: 'entries' },
+      { file: 'clarity_dashboard.PNG', title: 'Tableau de bord', caption: 'Vue d’ensemble de l’activité et des indicateurs clés.', layout: 'dashboard' },
+      { file: 'clarity_ocr_facture.PNG', title: 'OCR des factures', caption: 'Lecture automatique des factures et extraction de leurs données.', layout: 'ocr' },
+      { file: 'clarity_informations_factures.PNG', title: 'Informations des factures', caption: 'Le détail de chaque facture, vérifié avant comptabilisation.', layout: 'document' },
+      { file: 'clarity_facture_electronqiue.PNG', title: 'Facture électronique', caption: 'Émission et suivi des factures au format électronique.', layout: 'document' },
+      { file: 'clarity_journal_general.PNG', title: 'Journal général', caption: 'Les écritures comptables, filtrables par période et par journal.', layout: 'entries' },
+      { file: 'clarity_grandlivre.PNG', title: 'Grand livre', caption: 'Le détail des mouvements et des soldes, compte par compte.', layout: 'entries' },
+      { file: 'clarity_balance_agee.PNG', title: 'Balance âgée', caption: 'Créances par ancienneté, clients prioritaires et relances.', layout: 'chart' },
+      { file: 'clarity_reporting_client&fournisseur.PNG', title: 'Reporting clients & fournisseurs', caption: 'Indicateurs de facturation et de règlement par tiers.', layout: 'chart' },
     ],
   },
   {
     product: 'Mizane',
     initial: 'M',
     label: 'Analyse & audit',
-    images: ['/screenshots/mizane-1.png', '/screenshots/mizane-2.png', '/screenshots/mizane-3.png'],
     frames: [
-      { title: 'Lecture financière', caption: 'Indicateurs clés pour une première lecture des comptes.', layout: 'chart' },
-      { title: 'Répartition & ratios', caption: 'Graphiques de répartition et ratios pour la revue analytique.', layout: 'ratios' },
-      { title: 'Rapport de synthèse', caption: 'Génération d’un rapport structuré, prêt à être restitué.', layout: 'report' },
+      { file: 'mizane_dashboard.PNG', title: 'Tableau de bord', caption: 'Indicateurs clés pour une première lecture des comptes.', layout: 'chart' },
+      { file: 'mizane_analyse_deterministe.PNG', title: 'Analyse déterministe', caption: 'Contrôles automatiques du journal selon des règles comptables et fiscales.', layout: 'ratios' },
+      { file: 'mizane_analyse_ia.PNG', title: 'Analyse IA', caption: 'Anomalies détectées par l’IA, expliquées et rattachées à leur pièce source.', layout: 'report' },
     ],
   },
 ];
@@ -54,15 +55,15 @@ const apps: ShowcaseApp[] = [
 const FRAME_DURATION = 4500;
 
 // Every frame of every app, in play order: the loop runs through an app's frames, then moves on to the next app.
-type Slot = { app: number; frame: number; title: string; caption: string; layout: Layout; image?: string };
+type Slot = { app: number; frame: number; title: string; caption: string; layout: Layout; image: string };
 const slots: Slot[] = apps.flatMap((app, a) =>
-  Array.from({ length: Math.max(app.frames.length, app.images.length) }, (_, f) => ({
+  app.frames.map((f, i) => ({
     app: a,
-    frame: f,
-    title: app.frames[f]?.title ?? `Vue ${f + 1}`,
-    caption: app.frames[f]?.caption ?? '',
-    layout: app.frames[f]?.layout ?? app.frames[app.frames.length - 1].layout,
-    image: app.images[f],
+    frame: i,
+    title: f.title,
+    caption: f.caption,
+    layout: f.layout ?? 'dashboard',
+    image: `/screenshots/${encodeURIComponent(f.file)}`,
   })),
 );
 
@@ -187,6 +188,7 @@ export function AppShowcase() {
   const rootRef = useRef<HTMLDivElement>(null);
   const appTabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const swipeStart = useRef<number | null>(null);
+  const thumbsRef = useRef<HTMLDivElement>(null);
 
   // Only run the loop while the showcase is on screen.
   useEffect(() => {
@@ -197,12 +199,21 @@ export function AppShowcase() {
     return () => observer.disconnect();
   }, []);
 
-  const current = slots[position];
+  const index = Math.min(position, slots.length - 1);
+  const current = slots[index];
   const activeApp = apps[current.app];
   const appSlots = useMemo(() => slots.map((slot, i) => ({ slot, i })).filter(({ slot }) => slot.app === current.app), [current.app]);
+  // Keep the active thumbnail visible when the row scrolls (apps with many frames), without moving the page.
+  useEffect(() => {
+    const row = thumbsRef.current;
+    const active = row?.querySelector<HTMLElement>(".showcase-thumb.is-active");
+    if (!row || !active) return;
+    row.scrollTo({ left: active.offsetLeft - (row.clientWidth - active.offsetWidth) / 2, behavior: reducedMotion ? "auto" : "smooth" });
+  }, [index, reducedMotion]);
+
   const autoplay = !reducedMotion && !userPaused;
   const running = autoplay && !hovered && inView;
-  const hasImage = (slot: Slot) => Boolean(slot.image && !brokenImages.has(slot.image));
+  const hasImage = (slot: Slot) => !brokenImages.has(slot.image);
 
   function goTo(next: number) {
     setPosition((next + slots.length) % slots.length);
@@ -234,7 +245,7 @@ export function AppShowcase() {
     if (swipeStart.current === null) return;
     const delta = event.clientX - swipeStart.current;
     swipeStart.current = null;
-    if (Math.abs(delta) > 40) goTo(position + (delta < 0 ? 1 : -1));
+    if (Math.abs(delta) > 40) goTo(index + (delta < 0 ? 1 : -1));
   }
 
   return (
@@ -288,40 +299,40 @@ export function AppShowcase() {
               key={`${slot.app}-${slot.frame}`}
               aria-roledescription="diapositive"
               aria-label={`${apps[slot.app].product}, vue ${slot.frame + 1} : ${slot.title}`}
-              aria-hidden={i !== position}
-              className={`showcase-slide ${i === position ? 'is-active' : ''}`}
+              aria-hidden={i !== index}
+              className={`showcase-slide ${i === index ? 'is-active' : ''}`}
             >
               {hasImage(slot)
-                ? <img src={slot.image} alt={`${apps[slot.app].product} — ${slot.title}`} className="h-full w-full object-cover object-top" draggable={false} onError={() => markBroken(slot.image!)} />
+                ? <img src={slot.image} alt={`${apps[slot.app].product} — ${slot.title}`} className="h-full w-full object-cover object-top" draggable={false} onError={() => markBroken(slot.image)} />
                 : <PlaceholderScreen app={apps[slot.app]} slot={slot} />}
             </div>
           ))}
-          <button type="button" onClick={() => goTo(position - 1)} className="showcase-arrow left-2 sm:left-3" aria-label="Vue précédente"><ChevronLeft size={16} /></button>
-          <button type="button" onClick={() => goTo(position + 1)} className="showcase-arrow right-2 sm:right-3" aria-label="Vue suivante"><ChevronRight size={16} /></button>
+          <button type="button" onClick={() => goTo(index - 1)} className="showcase-arrow left-2 sm:left-3" aria-label="Vue précédente"><ChevronLeft size={16} /></button>
+          <button type="button" onClick={() => goTo(index + 1)} className="showcase-arrow right-2 sm:right-3" aria-label="Vue suivante"><ChevronRight size={16} /></button>
         </div>
 
         <div className="flex items-stretch gap-2 border-t border-[#6d1a2b]/10 bg-[#f8f8fb] p-2 sm:gap-3 sm:p-3">
-          <div className="grid min-w-0 flex-1 gap-1.5 sm:gap-2" style={{ gridTemplateColumns: `repeat(${appSlots.length}, minmax(0, 1fr))` }}>
+          <div ref={thumbsRef} className="showcase-thumbs flex min-w-0 flex-1 gap-1.5 overflow-x-auto sm:gap-2">
             {appSlots.map(({ slot, i }) => (
               <button
                 key={i}
                 type="button"
                 onClick={() => goTo(i)}
                 aria-label={`Vue ${slot.frame + 1} : ${slot.title}`}
-                aria-current={i === position ? 'true' : undefined}
-                className={`showcase-thumb ${i === position ? 'is-active' : ''}`}
+                aria-current={i === index ? 'true' : undefined}
+                className={`showcase-thumb ${i === index ? 'is-active' : ''}`}
                 data-testid={`button-showcase-frame-${slot.frame}`}
               >
                 <span className="showcase-thumb-media">
                   {hasImage(slot)
-                    ? <img src={slot.image} alt="" className="h-full w-full object-cover object-top" draggable={false} onError={() => markBroken(slot.image!)} />
+                    ? <img src={slot.image} alt="" className="h-full w-full object-cover object-top" draggable={false} onError={() => markBroken(slot.image)} />
                     : <span className="grid h-full w-full place-items-center font-mono text-[10px] font-bold text-[#6d1a2b]/60">{String(slot.frame + 1).padStart(2, '0')}</span>}
                 </span>
                 <span className="showcase-thumb-label">{slot.title}</span>
                 <span className="showcase-track" aria-hidden="true">
-                  {i === position && autoplay
-                    ? <span key={position} className="showcase-progress" style={{ animationDuration: `${FRAME_DURATION}ms`, animationPlayState: running ? 'running' : 'paused' }} onAnimationEnd={() => goTo(position + 1)} />
-                    : <span className={`block h-full bg-[#6d1a2b] ${i < position ? 'w-full opacity-35' : i === position ? 'w-full' : 'w-0'}`} />}
+                  {i === index && autoplay
+                    ? <span key={index} className="showcase-progress" style={{ animationDuration: `${FRAME_DURATION}ms`, animationPlayState: running ? 'running' : 'paused' }} onAnimationEnd={() => goTo(index + 1)} />
+                    : <span className={`block h-full bg-[#6d1a2b] ${i < index ? 'w-full opacity-35' : i === index ? 'w-full' : 'w-0'}`} />}
                 </span>
               </button>
             ))}

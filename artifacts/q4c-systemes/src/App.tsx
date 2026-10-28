@@ -24,7 +24,7 @@ const products = [
   },
   {
     number: '02',
-    name: 'HisabPro',
+    name: 'Clarity',
     label: 'GESTION & PILOTAGE',
     icon: Workflow,
     description: 'Plateforme de gestion et de pilotage comptable pour fluidifier l’organisation des cabinets et entreprises.',
@@ -181,7 +181,7 @@ function DemoForm() {
                 <span className="mt-3 flex items-center gap-1.5 border border-[#6d1a2b]/20 bg-[#f2e4e7] px-2 py-1 font-mono text-[8px] font-bold tracking-[.04em] text-[#6d1a2b]"><FileCheck2 size={11} className="shrink-0" />PRÊT · FACTURE ÉLECTRONIQUE</span>
                 <span className="hero-card-cta">Voir Lexpia-Pro <ArrowRight size={11} /></span>
               </a>
-              <a href="#hisabpro" className="hero-float-delay hero-card hero-card-link relative block md:absolute md:right-[-2%] md:top-[31%] md:w-[200px]" aria-label="Finance — voir HisabPro" data-testid="link-hero-hisabpro">
+              <a href="#clarity" className="hero-float-delay hero-card hero-card-link relative block md:absolute md:right-[-2%] md:top-[31%] md:w-[200px]" aria-label="Finance — voir Clarity" data-testid="link-hero-clarity">
                 <div className="flex items-center justify-between">
                   <span className="grid h-8 w-8 place-items-center bg-[#e1e1e4] text-[#6d1a2b]"><TrendingUp size={15} /></span>
                   <span className="font-mono text-[9px] text-[#a3253f]">02 / PILOTAGE</span>
@@ -191,7 +191,7 @@ function DemoForm() {
                 <div className="mt-3 flex h-7 items-end gap-1">
                   {['#c7c7ca', '#9e9ea1', '#d9a0ab', '#6d1a2b', '#9e9ea1', '#6d1a2b'].map((color, i) => <span key={i} className="hero-bar h-full w-3" style={{ backgroundColor: color, animationDelay: `${i * 0.25}s` }} />)}
                 </div>
-                <span className="hero-card-cta">Voir HisabPro <ArrowRight size={11} /></span>
+                <span className="hero-card-cta">Voir Clarity <ArrowRight size={11} /></span>
               </a>
               <a href="#mizane" className="hero-float hero-card hero-card-link relative block md:absolute md:bottom-[4%] md:left-[20%] md:w-[210px]" aria-label="Audit — voir Mizane" data-testid="link-hero-mizane">
                 <div className="flex items-center justify-between">
@@ -310,17 +310,17 @@ function DemoForm() {
                 </div>
               </article>
 
-              <article id="hisabpro" className="preview-case grid overflow-hidden border border-[#6d1a2b]/15 bg-[#f4f4f7] lg:grid-cols-[.78fr_1.22fr]" aria-labelledby="preview-hisab-title">
+              <article id="clarity" className="preview-case grid overflow-hidden border border-[#6d1a2b]/15 bg-[#f4f4f7] lg:grid-cols-[.78fr_1.22fr]" aria-labelledby="preview-clarity-title">
                 <div className="flex flex-col justify-center p-6 md:p-9 lg:order-2 lg:p-11">
                   <span className="font-mono text-[9px] tracking-[.14em] text-[#a3253f]">02 / GESTION & PILOTAGE</span>
-                  <h3 id="preview-hisab-title" className="mt-4 font-serif text-[29px] font-semibold tracking-[-.045em] text-[#2b2b30]">HisabPro</h3>
+                  <h3 id="preview-clarity-title" className="mt-4 font-serif text-[29px] font-semibold tracking-[-.045em] text-[#2b2b30]">Clarity</h3>
                   <p className="mt-3 max-w-[350px] text-[13px] leading-[1.8] text-[#68686b]">Un espace de gestion comptable pour organiser les dossiers et suivre les principaux sujets d’un cabinet ou d’une entreprise.</p>
                   <span className="mt-6 w-fit border-l-2 border-[#a3253f] pl-3 text-[10px] leading-[1.7] text-[#7b7b7e]">Exemple de vue de pilotage · données fictives</span>
                 </div>
-                <div className="preview-screen p-3 sm:p-5 md:p-7 lg:order-1" role="img" aria-label="Illustration indicative d’HisabPro : vue de gestion comptable avec dossiers d’exemple et différents états de suivi.">
+                <div className="preview-screen p-3 sm:p-5 md:p-7 lg:order-1" role="img" aria-label="Illustration indicative de Clarity : vue de gestion comptable avec dossiers d’exemple et différents états de suivi.">
                   <div className="preview-window">
                     <div className="preview-topbar">
-                      <span className="flex items-center gap-2 font-serif text-[12px] font-bold text-[#2b2b30]"><span className="grid h-6 w-6 place-items-center bg-[#6d1a2b] font-mono text-[9px] text-[#f4f4f7]">H</span>HisabPro</span>
+                      <span className="flex items-center gap-2 font-serif text-[12px] font-bold text-[#2b2b30]"><span className="grid h-6 w-6 place-items-center bg-[#6d1a2b] font-mono text-[9px] text-[#f4f4f7]">C</span>Clarity</span>
                       <span className="preview-window-label">GESTION COMPTABLE · EXEMPLE</span>
                     </div>
                     <div className="grid min-h-[275px] sm:grid-cols-[.42fr_.58fr]">
@@ -394,7 +394,7 @@ function DemoForm() {
             <div>
               <div className="eyebrow">DÉMONSTRATION · MVP</div>
               <h2 id="demo-heading" className="section-heading mt-5 max-w-[400px]">Nos applications,<br /><em>en action.</em></h2>
-              <p className="mt-6 max-w-[400px] text-[14px] leading-[1.85] text-[#6a6a6d]">Un aperçu des écrans de Lexpia-Pro, HisabPro et Mizane : de la lecture d’une pièce au rapport de synthèse, en passant par le suivi des dossiers.</p>
+              <p className="mt-6 max-w-[400px] text-[14px] leading-[1.85] text-[#6a6a6d]">Un aperçu des écrans de Lexpia-Pro, Clarity et Mizane : de la lecture d’une pièce au rapport de synthèse, en passant par le suivi des dossiers.</p>
               <ul className="mt-7 space-y-2.5 text-[12px] text-[#4a4a50]">
                 {['Défilement automatique, pause au survol', 'Navigation par onglets, flèches ou glissement', 'Interfaces issues de nos MVP'].map((item) => <li key={item} className="flex items-center gap-3"><span className="h-px w-5 bg-[#a3253f]" />{item}</li>)}
               </ul>

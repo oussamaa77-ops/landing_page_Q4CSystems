@@ -1,7 +1,7 @@
 kind = "web"
 previewPath = "/"
 title = "Q4C Systèmes"
-description = "Landing page en français de Q4C Systèmes, éditeur marocain de logiciels de comptabilité, d'audit et de finance, présentant Lexpia-Pro, HisabPro et Mizane aux cabinets et entreprises."
+description = "Landing page en français de Q4C Systèmes, éditeur marocain de logiciels de comptabilité, d'audit et de finance, présentant Lexpia-Pro, Clarity et Mizane aux cabinets et entreprises."
 version = "1.0.0"
 id = "artifacts/q4c-systemes"
 router = "path"
