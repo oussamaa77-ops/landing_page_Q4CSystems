@@ -231,6 +231,17 @@
 .showcase-stage { cursor: grab; user-select: none; }
 .showcase-slide { position: absolute; inset: 0; opacity: 0; transform: scale(1.025); transition: opacity .8s cubic-bezier(.4,0,.2,1), transform 1.2s cubic-bezier(.2,.7,.2,1); pointer-events: none; }
 .showcase-slide.is-active { opacity: 1; transform: scale(1); pointer-events: auto; }
+/* Every capture is shown whole, centred in the same 16:10 frame, whatever its own proportions. */
+.showcase-shot { position: absolute; inset: 0; margin: auto; max-width: calc(100% - 24px); max-height: calc(100% - 24px); width: auto; height: auto; object-fit: contain; background: #fff; box-shadow: 0 10px 30px rgba(30,30,35,.12), 0 0 0 1px rgba(109,26,43,.08); cursor: zoom-in; }
+.showcase-zoom { position: absolute; right: 8px; bottom: 8px; z-index: 2; display: flex; align-items: center; gap: 6px; height: 28px; padding: 0 9px; border: 1px solid rgba(109,26,43,.2); background: rgba(244,244,247,.94); color: #6d1a2b; font: 700 9px/1 'Space Mono', monospace; letter-spacing: .06em; box-shadow: 0 6px 18px rgba(30,30,35,.1); transition: background-color .2s ease, color .2s ease; }
+.showcase-zoom:hover, .showcase-zoom:focus-visible { background: #6d1a2b; color: #f4f4f7; }
+.showcase-lightbox { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; background: rgba(24,22,26,.92); animation: showcase-fade .2s ease; }
+.showcase-lightbox-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; color: #e8e8eb; border-bottom: 1px solid rgba(255,255,255,.08); }
+.showcase-lightbox-close { display: grid; height: 34px; width: 34px; flex-shrink: 0; place-items: center; border: 1px solid rgba(255,255,255,.2); color: #f4f4f7; transition: background-color .2s ease; }
+.showcase-lightbox-close:hover, .showcase-lightbox-close:focus-visible { background: #6d1a2b; border-color: #6d1a2b; }
+.showcase-lightbox-body { flex: 1; min-height: 0; overflow: auto; padding: 16px; display: flex; }
+.showcase-lightbox-img { margin: auto; max-width: min(100%, 1600px); height: auto; background: #fff; box-shadow: 0 20px 60px rgba(0,0,0,.4); }
+@keyframes showcase-fade { from { opacity: 0; } to { opacity: 1; } }
 .showcase-scan { position: absolute; left: 0; right: 50%; height: 2px; background: linear-gradient(90deg, transparent, rgba(163,37,63,.55), transparent); animation: showcase-scan 2.6s ease-in-out infinite; }
 .showcase-track { display: block; height: 2px; overflow: hidden; background: #dcdcdf; }
 .showcase-progress { display: block; height: 100%; background: #6d1a2b; transform-origin: left; animation-name: showcase-progress; animation-timing-function: linear; animation-fill-mode: forwards; }

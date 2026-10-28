@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
-import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
+import { createPortal } from 'react-dom';
+import { ChevronLeft, ChevronRight, Maximize2, Pause, Play, X } from 'lucide-react';
 
 type Layout = 'document' | 'ocr' | 'bilingual' | 'dashboard' | 'workspace' | 'entries' | 'chart' | 'ratios' | 'report';
 
@@ -52,7 +53,7 @@ const apps: ShowcaseApp[] = [
   },
 ];
 
-const FRAME_DURATION = 4500;
+const FRAME_DURATION = 3200;
 
 // Every frame of every app, in play order: the loop runs through an app's frames, then moves on to the next app.
 type Slot = { app: number; frame: number; title: string; caption: string; layout: Layout; image: string };
@@ -188,7 +189,10 @@ export function AppShowcase() {
   const rootRef = useRef<HTMLDivElement>(null);
   const appTabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const swipeStart = useRef<number | null>(null);
+  const swiped = useRef(false);
   const thumbsRef = useRef<HTMLDivElement>(null);
+  const [zoomed, setZoomed] = useState<Slot | null>(null);
+  const closeZoom = useCallback(() => setZoomed(null), []);
 
   // Only run the loop while the showcase is on screen.
   useEffect(() => {
@@ -212,7 +216,7 @@ export function AppShowcase() {
   }, [index, reducedMotion]);
 
   const autoplay = !reducedMotion && !userPaused;
-  const running = autoplay && !hovered && inView;
+  const running = autoplay && !hovered && inView && !zoomed;
   const hasImage = (slot: Slot) => !brokenImages.has(slot.image);
 
   function goTo(next: number) {
@@ -238,6 +242,7 @@ export function AppShowcase() {
   }
 
   function onPointerDown(event: PointerEvent<HTMLDivElement>) {
+    swiped.current = false;
     if (event.pointerType !== 'mouse') swipeStart.current = event.clientX;
   }
 
@@ -245,7 +250,9 @@ export function AppShowcase() {
     if (swipeStart.current === null) return;
     const delta = event.clientX - swipeStart.current;
     swipeStart.current = null;
-    if (Math.abs(delta) > 40) goTo(index + (delta < 0 ? 1 : -1));
+    // A swipe must not also open the enlarged view through the click that follows it.
+    swiped.current = Math.abs(delta) > 40;
+    if (swiped.current) goTo(index + (delta < 0 ? 1 : -1));
   }
 
   return (
@@ -303,12 +310,17 @@ export function AppShowcase() {
               className={`showcase-slide ${i === index ? 'is-active' : ''}`}
             >
               {hasImage(slot)
-                ? <img src={slot.image} alt={`${apps[slot.app].product} — ${slot.title}`} className="h-full w-full object-cover object-top" draggable={false} onError={() => markBroken(slot.image)} />
+                ? <img src={slot.image} alt={`${apps[slot.app].product} — ${slot.title}`} className="showcase-shot" draggable={false} onClick={() => { if (!swiped.current) setZoomed(slot); }} onError={() => markBroken(slot.image)} />
                 : <PlaceholderScreen app={apps[slot.app]} slot={slot} />}
             </div>
           ))}
           <button type="button" onClick={() => goTo(index - 1)} className="showcase-arrow left-2 sm:left-3" aria-label="Vue précédente"><ChevronLeft size={16} /></button>
           <button type="button" onClick={() => goTo(index + 1)} className="showcase-arrow right-2 sm:right-3" aria-label="Vue suivante"><ChevronRight size={16} /></button>
+          {hasImage(current) && (
+            <button type="button" onClick={() => setZoomed(current)} className="showcase-zoom" aria-label={`Agrandir la capture : ${current.title}`} data-testid="button-showcase-zoom">
+              <Maximize2 size={12} /><span className="hidden sm:inline">Agrandir</span>
+            </button>
+          )}
         </div>
 
         <div className="flex items-stretch gap-2 border-t border-[#6d1a2b]/10 bg-[#f8f8fb] p-2 sm:gap-3 sm:p-3">
@@ -350,6 +362,41 @@ export function AppShowcase() {
         <span className="mx-2 text-[#c7c7ca]">—</span>
         <strong className="font-semibold text-[#2b2b30]">{current.title}</strong>{current.caption && <> : {current.caption}</>}
       </p>
+
+      {zoomed && <Lightbox slot={zoomed} onClose={closeZoom} />}
     </div>
+  );
+}
+
+// Full-resolution view of one capture, scrollable when the screen is taller or wider than the viewport.
+function Lightbox({ slot, onClose }: { slot: Slot; onClose: () => void }) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeRef.current?.focus();
+    const onKey = (event: globalThis.KeyboardEvent) => { if (event.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = overflow;
+      window.removeEventListener('keydown', onKey);
+      opener?.focus();
+    };
+  }, [onClose]);
+
+  const label = `${apps[slot.app].product} — ${slot.title}`;
+  return createPortal(
+    <div className="showcase-lightbox" role="dialog" aria-modal="true" aria-label={label} onClick={onClose}>
+      <div className="showcase-lightbox-bar" onClick={(event) => event.stopPropagation()}>
+        <span className="min-w-0 truncate font-mono text-[10px] tracking-[.08em]"><span className="font-bold text-[#d9a0ab]">Q4C</span> · {label}</span>
+        <button ref={closeRef} type="button" onClick={onClose} className="showcase-lightbox-close" aria-label="Fermer l’aperçu" data-testid="button-showcase-close"><X size={16} /></button>
+      </div>
+      <div className="showcase-lightbox-body">
+        <img src={slot.image} alt={label} className="showcase-lightbox-img" onClick={(event) => event.stopPropagation()} />
+      </div>
+    </div>,
+    document.body,
   );
 }
