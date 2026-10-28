@@ -92,6 +92,15 @@ const domains = [
   },
 ];
 
+// The API explains validation, rate-limit and delivery failures in `error`; anything else
+// (server down, network) gets the generic message, with the status code to help diagnose it.
+function contactErrorMessage(error: unknown): string {
+  const { status, data } = (error ?? {}) as { status?: number; data?: { error?: unknown } | null };
+  if (typeof data?.error === 'string') return data.error;
+  const code = typeof status === 'number' ? ` (code ${status})` : '';
+  return `L’envoi automatique est indisponible pour le moment. Votre demande n’a pas été transmise. Réessayez plus tard.${code}`;
+}
+
 function DemoForm() {
   const [submitted, setSubmitted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -503,7 +512,7 @@ function DemoForm() {
                   </div>
                   {contactRequestMutation.isError && (
                     <p className="mt-4 text-[12px] leading-[1.65] text-[#f0bfc8]" role="alert">
-                      L’envoi automatique est indisponible pour le moment. Votre demande n’a pas été transmise. Réessayez plus tard.
+                      {contactErrorMessage(contactRequestMutation.error)}
                     </p>
                   )}
                   <button type="submit" disabled={contactRequestMutation.isPending} aria-busy={contactRequestMutation.isPending} className="button-main mt-6 w-full justify-between disabled:cursor-wait disabled:opacity-70" data-testid="button-submit-contact">

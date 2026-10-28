@@ -4,9 +4,12 @@ import * as schema from "./schema";
 
 const { Pool } = pg;
 
+// Missing configuration must not crash the API at import time: the contact
+// route still emails demo requests when the database is unavailable, and
+// each query fails (and is caught) on its own.
 if (!process.env.DATABASE_URL) {
-  throw new Error(
-    "DATABASE_URL must be set. Did you forget to provision a database?",
+  console.error(
+    "DATABASE_URL is not set: database queries will fail. Did you forget to provision a database?",
   );
 }
 
