@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, FileCheck2, FileText, Fingerprint, Languages, LockKeyhole, Menu, ScanLine, ShieldCheck, Sparkles, TrendingUp, Workflow, X } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUpRight, BookOpen, Check, Clock, FileCheck2, FileText, Fingerprint, Landmark, Languages, LayoutDashboard, Link2, ListChecks, LockKeyhole, Menu, MessageSquare, Receipt, ScanLine, SearchCheck, ShieldCheck, Sparkles, Target, TrendingUp, Users, Wallet, Workflow, X } from 'lucide-react';
 import { type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useSubmitContactRequest, type ContactRequestInputInterest } from '@workspace/api-client-react';
@@ -39,6 +39,56 @@ const products = [
     description: 'Outil d’analyse financière, d’audit et de génération de rapports de synthèse.',
     detail: 'Des chiffres mieux éclairés, des synthèses plus claires.',
     tone: 'clay',
+  },
+];
+
+// The hero cards link to these blocks by id.
+const domains = [
+  {
+    id: 'comptabilite',
+    number: '01',
+    label: 'AUTOMATISATION',
+    name: 'Comptabilité',
+    icon: ScanLine,
+    pitch: 'Automatiser la saisie et la tenue comptable, de la pièce reçue jusqu’aux états.',
+    features: [
+      { title: 'Saisie OCR des pièces', text: 'Lecture automatique des factures et pièces, en arabe comme en français.', icon: ScanLine },
+      { title: 'Facture électronique', text: 'Émission et suivi des factures au format électronique.', icon: FileCheck2 },
+      { title: 'Journal & grand livre', text: 'Écritures, mouvements et soldes consultables compte par compte.', icon: BookOpen },
+      { title: 'Lettrage', text: 'Rapprochement des factures et des règlements pour chaque tiers.', icon: Link2 },
+      { title: 'Rapprochement bancaire', text: 'Pointage des relevés bancaires avec les écritures de banque.', icon: Landmark },
+      { title: 'TVA', text: 'Préparation des éléments de la déclaration de TVA.', icon: Receipt },
+    ],
+  },
+  {
+    id: 'finance',
+    number: '02',
+    label: 'PILOTAGE',
+    name: 'Finance',
+    icon: TrendingUp,
+    pitch: 'Suivre l’activité, la trésorerie et les encours clients pour décider plus vite.',
+    features: [
+      { title: 'Tableaux de bord', text: 'Les indicateurs clés de l’activité, en un coup d’œil.', icon: LayoutDashboard },
+      { title: 'Reporting clients & fournisseurs', text: 'Facturation, règlements et encours, tiers par tiers.', icon: Users },
+      { title: 'Balance âgée & relances', text: 'Créances classées par ancienneté et priorités de recouvrement.', icon: Clock },
+      { title: 'Trésorerie', text: 'Suivi des encaissements, des décaissements et des soldes.', icon: Wallet },
+      { title: 'Budget vs réalisé', text: 'Comparaison des réalisations avec les prévisions.', icon: Target },
+    ],
+  },
+  {
+    id: 'audit',
+    number: '03',
+    label: 'CONTRÔLE',
+    name: 'Audit',
+    icon: ShieldCheck,
+    pitch: 'Contrôler les comptes, détecter les anomalies et restituer des constats clairs.',
+    features: [
+      { title: 'Revue analytique', text: 'Lecture des comptes et des variations significatives.', icon: SearchCheck },
+      { title: 'Contrôles automatiques', text: 'Règles comptables et fiscales appliquées à l’ensemble du journal.', icon: ListChecks },
+      { title: 'Détection d’anomalies par IA', text: 'Anomalies expliquées et rattachées à leur pièce source.', icon: Sparkles },
+      { title: 'Rapports de synthèse', text: 'Rapports structurés, exportables en PDF ou en Word.', icon: FileText },
+      { title: 'Assistant documentaire IA', text: 'Des réponses fondées sur les documents du dossier.', icon: MessageSquare },
+    ],
   },
 ];
 
@@ -167,7 +217,7 @@ function DemoForm() {
                   <span className="mt-1 block font-serif text-[18px] font-semibold tracking-[-.04em] text-[#2b2b30]">le chiffre</span>
                 </div>
               </div>
-              <a href="#lexpia-pro" className="hero-float hero-card hero-card-link relative block md:absolute md:left-0 md:top-[9%] md:w-[205px]" aria-label="Comptabilité — voir Lexpia-Pro" data-testid="link-hero-lexpia-pro">
+              <a href="#comptabilite" className="hero-float hero-card hero-card-link relative block md:absolute md:left-0 md:top-[9%] md:w-[205px]" aria-label="Comptabilité — voir les fonctionnalités" data-testid="link-hero-comptabilite">
                 <div className="flex items-center justify-between">
                   <span className="grid h-8 w-8 place-items-center bg-[#dedee1] text-[#6d1a2b]"><ScanLine size={15} /></span>
                   <span className="font-mono text-[9px] text-[#a3253f]">01 / AUTOMATISATION</span>
@@ -179,9 +229,9 @@ function DemoForm() {
                   <span className="hero-scan absolute inset-y-0 w-8 bg-gradient-to-r from-transparent via-[#d9a0ab]/50 to-transparent" />
                 </div>
                 <span className="mt-3 flex items-center gap-1.5 border border-[#6d1a2b]/20 bg-[#f2e4e7] px-2 py-1 font-mono text-[8px] font-bold tracking-[.04em] text-[#6d1a2b]"><FileCheck2 size={11} className="shrink-0" />PRÊT · FACTURE ÉLECTRONIQUE</span>
-                <span className="hero-card-cta">Voir Lexpia-Pro <ArrowRight size={11} /></span>
+                <span className="hero-card-cta">Voir les fonctionnalités <ArrowRight size={11} /></span>
               </a>
-              <a href="#clarity" className="hero-float-delay hero-card hero-card-link relative block md:absolute md:right-[-2%] md:top-[31%] md:w-[200px]" aria-label="Finance — voir Clarity" data-testid="link-hero-clarity">
+              <a href="#finance" className="hero-float-delay hero-card hero-card-link relative block md:absolute md:right-[-2%] md:top-[31%] md:w-[200px]" aria-label="Finance — voir les fonctionnalités" data-testid="link-hero-finance">
                 <div className="flex items-center justify-between">
                   <span className="grid h-8 w-8 place-items-center bg-[#e1e1e4] text-[#6d1a2b]"><TrendingUp size={15} /></span>
                   <span className="font-mono text-[9px] text-[#a3253f]">02 / PILOTAGE</span>
@@ -191,9 +241,9 @@ function DemoForm() {
                 <div className="mt-3 flex h-7 items-end gap-1">
                   {['#c7c7ca', '#9e9ea1', '#d9a0ab', '#6d1a2b', '#9e9ea1', '#6d1a2b'].map((color, i) => <span key={i} className="hero-bar h-full w-3" style={{ backgroundColor: color, animationDelay: `${i * 0.25}s` }} />)}
                 </div>
-                <span className="hero-card-cta">Voir Clarity <ArrowRight size={11} /></span>
+                <span className="hero-card-cta">Voir les fonctionnalités <ArrowRight size={11} /></span>
               </a>
-              <a href="#mizane" className="hero-float hero-card hero-card-link relative block md:absolute md:bottom-[4%] md:left-[20%] md:w-[210px]" aria-label="Audit — voir Mizane" data-testid="link-hero-mizane">
+              <a href="#audit" className="hero-float hero-card hero-card-link relative block md:absolute md:bottom-[4%] md:left-[20%] md:w-[210px]" aria-label="Audit — voir les fonctionnalités" data-testid="link-hero-audit">
                 <div className="flex items-center justify-between">
                   <span className="grid h-8 w-8 place-items-center bg-[#efdfe3] text-[#a3253f]"><ShieldCheck size={15} /></span>
                   <span className="font-mono text-[9px] text-[#a3253f]">03 / CONTRÔLE</span>
@@ -203,7 +253,7 @@ function DemoForm() {
                 <div className="mt-3 flex h-7 items-center gap-2">
                   {[0, 1, 2].map((i) => <span key={i} className="flex flex-1 items-center gap-1.5"><span className="hero-check grid h-3.5 w-3.5 shrink-0 place-items-center border border-[#a3253f]/60 text-[#a3253f]" style={{ animationDelay: `${i * 0.6}s` }}><Check size={9} strokeWidth={3} /></span><span className="h-[3px] flex-1 bg-[#dddde0]" /></span>)}
                 </div>
-                <span className="hero-card-cta">Voir Mizane <ArrowRight size={11} /></span>
+                <span className="hero-card-cta">Voir les fonctionnalités <ArrowRight size={11} /></span>
               </a>
               <span className="absolute right-[15%] top-[3%] hidden font-mono text-[9px] tracking-[.12em] text-[#7d7d80] md:block">MAROC · SECTEUR DU CHIFFRE</span>
               <span className="absolute bottom-[-2%] right-[3%] hidden font-mono text-[9px] tracking-[.12em] text-[#7d7d80] md:block">COMPTA / FINANCE / AUDIT</span>
@@ -248,143 +298,41 @@ function DemoForm() {
           </div>
         </section>
 
-        <section id="apercus" className="product-previews relative overflow-hidden bg-[#e9e9ec] py-24 md:py-32" aria-labelledby="previews-heading">
+        <section id="apercus" className="relative overflow-hidden bg-[#e9e9ec] py-24 md:py-32" aria-labelledby="domains-heading">
           <div className="q4c-container">
             <div className="grid gap-8 md:grid-cols-[.8fr_1.2fr] md:items-end">
               <div>
-                <div className="eyebrow">APERÇUS INDICATIFS</div>
-                <h2 id="previews-heading" className="section-heading mt-5 max-w-[440px]">Les solutions,<br />en <em>situation.</em></h2>
+                <div className="eyebrow">NOS CHANTIERS · PAR DOMAINE</div>
+                <h2 id="domains-heading" className="section-heading mt-5 max-w-[440px]">Les fonctionnalités,<br />par <em>domaine.</em></h2>
               </div>
               <p className="max-w-[520px] text-[14px] leading-[1.85] text-[#6a6a6d] md:justify-self-end">
-                Trois vues pour comprendre les usages couverts, du traitement d’une pièce à la lecture d’un rapport.
+                Comptabilité, finance, audit : les principaux ateliers que nous développons pour automatiser le travail du chiffre, de la pièce reçue au rapport final.
               </p>
             </div>
-            <p className="mt-7 inline-flex items-center gap-2 border border-[#a3253f]/25 bg-[#f4f4f7]/65 px-3 py-2 font-mono text-[9px] leading-relaxed tracking-[.04em] text-[#7a2f40]">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#a3253f]" />
-              Illustrations d’interface — données d’exemple, non contractuelles. Ces vues ne sont pas des captures exactes des produits.
-            </p>
 
             <div className="mt-12 space-y-7 md:mt-16">
-              <article id="lexpia-pro" className="preview-case grid overflow-hidden border border-[#6d1a2b]/15 bg-[#f4f4f7] lg:grid-cols-[.78fr_1.22fr]" aria-labelledby="preview-lexpia-title">
-                <div className="flex flex-col justify-center p-6 md:p-9 lg:p-11">
-                  <span className="font-mono text-[9px] tracking-[.14em] text-[#a3253f]">01 / TRAITEMENT DE PIÈCE</span>
-                  <h3 id="preview-lexpia-title" className="mt-4 font-serif text-[29px] font-semibold tracking-[-.045em] text-[#2b2b30]">Lexpia-Pro</h3>
-                  <p className="mt-3 max-w-[350px] text-[13px] leading-[1.8] text-[#68686b]">Une pièce comptable bilingue, visualisée à côté des informations reconnues et de leur transcription arabe / français.</p>
-                  <span className="mt-6 w-fit border-l-2 border-[#a3253f] pl-3 text-[10px] leading-[1.7] text-[#7b7b7e]">Exemple de parcours OCR · contenu fictif</span>
-                </div>
-                <div className="preview-screen p-3 sm:p-5 md:p-7" role="img" aria-label="Illustration indicative de Lexpia-Pro : une facture fictive en arabe et français à côté de champs de lecture OCR d’exemple.">
-                  <div className="preview-window">
-                    <div className="preview-topbar">
-                      <span className="flex items-center gap-2 font-serif text-[12px] font-bold text-[#2b2b30]"><span className="grid h-6 w-6 place-items-center bg-[#6d1a2b] font-mono text-[9px] text-[#f4f4f7]">L</span>Lexpia-Pro</span>
-                      <span className="preview-window-label">APERÇU · EXEMPLE</span>
+              {domains.map(({ id, number, label, name, icon: Icon, pitch, features }) => (
+                <article key={id} id={id} className="domain-case grid overflow-hidden border border-[#6d1a2b]/15 bg-[#f4f4f7] lg:grid-cols-[.62fr_1.38fr]" aria-labelledby={`domain-${id}-title`} data-testid={`card-domain-${id}`}>
+                  <div className="flex flex-col border-b border-[#6d1a2b]/10 p-6 md:p-9 lg:border-b-0 lg:border-r lg:p-10">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[9px] tracking-[.14em] text-[#a3253f]">{number} / {label}</span>
+                      <span className="grid h-10 w-10 place-items-center border border-[#6d1a2b]/20 text-[#6d1a2b]"><Icon size={18} strokeWidth={1.5} /></span>
                     </div>
-                    <div className="grid min-h-[275px] sm:grid-cols-[.9fr_1.1fr]">
-                      <div className="preview-document-wrap">
-                        <div className="preview-document">
-                          <div className="flex items-start justify-between border-b border-[#6d1a2b]/10 pb-3">
-                            <div><span className="block font-mono text-[7px] tracking-[.1em] text-[#a3253f]">DOCUMENT EXEMPLE</span><span className="mt-1 block text-[10px] font-bold text-[#4a4a50]">Facture / فاتورة</span></div>
-                            <FileText size={15} className="text-[#a3253f]" strokeWidth={1.5} />
-                          </div>
-                          <div className="mt-4 flex justify-between gap-3">
-                            <div className="space-y-2"><span className="doc-line w-16" /><span className="doc-line w-24" /><span className="doc-line w-20" /></div>
-                            <div dir="rtl" lang="ar" className="space-y-2 text-right"><span className="doc-line ml-auto w-16" /><span className="doc-line ml-auto w-20" /><span className="doc-line ml-auto w-14" /></div>
-                          </div>
-                          <div className="mt-5 border border-dashed border-[#a3253f]/45 p-2">
-                            <div className="flex justify-between border-b border-[#6d1a2b]/10 pb-2 text-[7px] text-[#7b7b7e]"><span>Désignation</span><span>البيان</span></div>
-                            <div className="flex justify-between py-2 text-[8px] text-[#5e5e61]"><span>Exemple de ligne</span><span dir="rtl" lang="ar">مثال</span></div>
-                          </div>
-                          <div className="mt-4 flex justify-between border-t border-[#6d1a2b]/10 pt-2 text-[8px] text-[#7b7b7e]"><span>Total · مثال</span><span>—</span></div>
-                        </div>
-                      </div>
-                      <div className="px-4 py-5 sm:px-5">
-                        <div className="flex items-center justify-between"><span className="font-mono text-[8px] font-bold tracking-[.1em] text-[#5e5e61]">LECTURE OCR</span><span className="border border-[#6d1a2b]/15 px-2 py-1 text-[7px] text-[#707073]">BILINGUE</span></div>
-                        <div className="mt-4 space-y-3">
-                          {[['Fournisseur / المورّد', 'Exemple de donnée'], ['Date / التاريخ', 'Exemple de donnée'], ['Référence / المرجع', 'Exemple de donnée']].map(([label, value]) => (
-                            <div key={label} className="border-b border-[#6d1a2b]/10 pb-2"><span className="block text-[7px] text-[#8d8d90]">{label}</span><span className="mt-1 block text-[9px] font-medium text-[#4a4a50]">{value}</span></div>
-                          ))}
-                        </div>
-                        <div className="mt-4 flex items-center gap-2 border border-[#6d1a2b]/10 bg-[#eaeaed] px-2.5 py-2 text-[8px] text-[#5e5e61]"><span className="h-1.5 w-1.5 rounded-full bg-[#6d1a2b]" />Champs présentés à titre illustratif</div>
-                      </div>
-                    </div>
+                    <h3 id={`domain-${id}-title`} className="mt-6 font-serif text-[32px] font-semibold tracking-[-.045em] text-[#2b2b30]">{name}</h3>
+                    <p className="mt-3 max-w-[340px] text-[13px] leading-[1.8] text-[#68686b]">{pitch}</p>
+                    <a href="#demo" className="mt-6 inline-flex w-fit items-center gap-2 text-[11px] font-bold text-[#6d1a2b] transition-colors hover:text-[#a3253f] lg:mt-auto lg:pt-8" data-testid={`link-domain-demo-${id}`}>Voir en démo <ArrowRight size={14} /></a>
                   </div>
-                </div>
-              </article>
-
-              <article id="clarity" className="preview-case grid overflow-hidden border border-[#6d1a2b]/15 bg-[#f4f4f7] lg:grid-cols-[.78fr_1.22fr]" aria-labelledby="preview-clarity-title">
-                <div className="flex flex-col justify-center p-6 md:p-9 lg:order-2 lg:p-11">
-                  <span className="font-mono text-[9px] tracking-[.14em] text-[#a3253f]">02 / GESTION & PILOTAGE</span>
-                  <h3 id="preview-clarity-title" className="mt-4 font-serif text-[29px] font-semibold tracking-[-.045em] text-[#2b2b30]">Clarity</h3>
-                  <p className="mt-3 max-w-[350px] text-[13px] leading-[1.8] text-[#68686b]">Un espace de gestion comptable pour organiser les dossiers et suivre les principaux sujets d’un cabinet ou d’une entreprise.</p>
-                  <span className="mt-6 w-fit border-l-2 border-[#a3253f] pl-3 text-[10px] leading-[1.7] text-[#7b7b7e]">Exemple de vue de pilotage · données fictives</span>
-                </div>
-                <div className="preview-screen p-3 sm:p-5 md:p-7 lg:order-1" role="img" aria-label="Illustration indicative de Clarity : vue de gestion comptable avec dossiers d’exemple et différents états de suivi.">
-                  <div className="preview-window">
-                    <div className="preview-topbar">
-                      <span className="flex items-center gap-2 font-serif text-[12px] font-bold text-[#2b2b30]"><span className="grid h-6 w-6 place-items-center bg-[#6d1a2b] font-mono text-[9px] text-[#f4f4f7]">C</span>Clarity</span>
-                      <span className="preview-window-label">GESTION COMPTABLE · EXEMPLE</span>
-                    </div>
-                    <div className="grid min-h-[275px] sm:grid-cols-[.42fr_.58fr]">
-                      <div className="border-b border-[#6d1a2b]/10 bg-[#ededf0] p-3 sm:border-b-0 sm:border-r">
-                        <span className="font-mono text-[7px] font-bold tracking-[.12em] text-[#8d8d90]">ESPACE DE TRAVAIL</span>
-                        <div className="mt-4 space-y-1">
-                          {['Vue d’ensemble', 'Dossiers', 'Suivi comptable'].map((item, index) => <div key={item} className={`flex items-center gap-2 px-2 py-2 text-[8px] ${index === 0 ? 'bg-[#e4e4e7] font-semibold text-[#4a4a50]' : 'text-[#7b7b7e]'}`}><span className="h-1.5 w-1.5 border border-current" />{item}</div>)}
-                        </div>
-                        <div className="mt-6 border-t border-[#6d1a2b]/10 pt-3"><span className="font-mono text-[7px] tracking-[.1em] text-[#8d8d90]">DOSSIERS</span><div className="mt-2 space-y-2 text-[8px] text-[#707073]"><span className="block">Entreprise exemple</span><span className="block">Cabinet exemple</span><span className="block">Autre dossier</span></div></div>
-                      </div>
-                      <div className="p-3 sm:p-4">
-                        <div className="flex items-start justify-between gap-2"><div><span className="font-mono text-[7px] tracking-[.1em] text-[#a3253f]">TABLEAU DE BORD</span><p className="mt-1 font-serif text-[13px] font-semibold text-[#2b2b30]">Suivi des dossiers</p></div><span className="border border-[#6d1a2b]/15 px-2 py-1 text-[7px] text-[#7b7b7e]">DONNÉES EXEMPLE</span></div>
-                        <div className="mt-4 grid grid-cols-3 gap-2">
-                          {['À traiter', 'En cours', 'À vérifier'].map((label, i) => <div key={label} className="border border-[#6d1a2b]/10 bg-[#f9f9fc] p-2"><span className="block text-[7px] text-[#8d8d90]">{label}</span><span className="mt-2 block h-1 w-full bg-[#e0e0e3]"><span className={`block h-1 ${i === 1 ? 'w-2/3 bg-[#a3253f]/70' : 'w-1/2 bg-[#6d1a2b]/55'}`} /></span></div>)}
-                        </div>
-                        <div className="mt-4 border border-[#6d1a2b]/10">
-                          <div className="grid grid-cols-[1.3fr_.8fr_.8fr] gap-1 border-b border-[#6d1a2b]/10 bg-[#ededf0] px-2 py-2 font-mono text-[6px] tracking-[.05em] text-[#7b7b7e]"><span>DOSSIER</span><span>ACTIVITÉ</span><span>SUIVI</span></div>
-                          {[['Entreprise exemple', 'Comptabilité', 'En cours'], ['Cabinet exemple', 'Pièces', 'À traiter'], ['Dossier exemple', 'Révision', 'À vérifier']].map(([a, b, c]) => <div key={a} className="grid grid-cols-[1.3fr_.8fr_.8fr] gap-1 border-b border-[#6d1a2b]/[.07] px-2 py-2 text-[7px] text-[#5e5e61] last:border-0"><span>{a}</span><span>{b}</span><span className="text-[#7f4452]">{c}</span></div>)}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article id="mizane" className="preview-case grid overflow-hidden border border-[#6d1a2b]/15 bg-[#f4f4f7] lg:grid-cols-[.78fr_1.22fr]" aria-labelledby="preview-mizane-title">
-                <div className="flex flex-col justify-center p-6 md:p-9 lg:p-11">
-                  <span className="font-mono text-[9px] tracking-[.14em] text-[#a3253f]">03 / ANALYSE & AUDIT</span>
-                  <h3 id="preview-mizane-title" className="mt-4 font-serif text-[29px] font-semibold tracking-[-.045em] text-[#2b2b30]">Mizane</h3>
-                  <p className="mt-3 max-w-[350px] text-[13px] leading-[1.8] text-[#68686b]">Une lecture visuelle des éléments d’analyse et une trame de rapport de synthèse pour restituer les constats.</p>
-                  <span className="mt-6 w-fit border-l-2 border-[#a3253f] pl-3 text-[10px] leading-[1.7] text-[#7b7b7e]">Exemple d’analyse · aucune donnée réelle</span>
-                </div>
-                <div className="preview-screen p-3 sm:p-5 md:p-7" role="img" aria-label="Illustration indicative de Mizane : écran d’analyse d’audit, graphiques sans valeurs réelles et rapport de synthèse d’exemple.">
-                  <div className="preview-window">
-                    <div className="preview-topbar">
-                      <span className="flex items-center gap-2 font-serif text-[12px] font-bold text-[#2b2b30]"><span className="grid h-6 w-6 place-items-center bg-[#6d1a2b] font-mono text-[9px] text-[#f4f4f7]">M</span>Mizane</span>
-                      <span className="preview-window-label">ANALYSE & AUDIT · EXEMPLE</span>
-                    </div>
-                    <div className="grid min-h-[275px] sm:grid-cols-[1fr_.8fr]">
-                      <div className="p-3 sm:p-4">
-                        <div className="flex items-center justify-between gap-2"><div><span className="font-mono text-[7px] tracking-[.1em] text-[#a3253f]">VUE D’ANALYSE</span><p className="mt-1 font-serif text-[13px] font-semibold text-[#2b2b30]">Lecture financière</p></div><span className="border border-[#6d1a2b]/15 px-2 py-1 text-[7px] text-[#7b7b7e]">ILLUSTRATION</span></div>
-                        <div className="mt-4 grid grid-cols-2 gap-2">
-                          <div className="border border-[#6d1a2b]/10 p-2"><span className="text-[7px] text-[#8d8d90]">Indicateur exemple</span><div className="mt-3 flex h-10 items-end gap-1 border-b border-[#6d1a2b]/10">{[35, 55, 43, 70, 58, 83, 64].map((height, i) => <span key={i} className="flex-1 bg-[#6d1a2b]/55" style={{ height: `${height}%` }} />)}</div><span className="mt-1 block text-[6px] text-[#8d8d90]">Visualisation sans valeur réelle</span></div>
-                          <div className="border border-[#6d1a2b]/10 p-2"><span className="text-[7px] text-[#8d8d90]">Répartition exemple</span><div className="mt-3 flex h-10 items-center justify-center"><div className="h-9 w-9 rounded-full border-[5px] border-[#d9a0ab] border-r-[#6d1a2b] border-b-[#c2c2c5]" /></div><span className="mt-1 block text-[6px] text-[#8d8d90]">Données fictives</span></div>
-                        </div>
-                        <div className="mt-3 border border-[#6d1a2b]/10 p-2">
-                          <span className="font-mono text-[7px] tracking-[.08em] text-[#7b7b7e]">POINTS DE LECTURE · EXEMPLE</span>
-                          <div className="mt-2 space-y-2"><div className="h-1 w-[88%] bg-[#dddde0]" /><div className="h-1 w-[72%] bg-[#dddde0]" /><div className="h-1 w-[80%] bg-[#dddde0]" /></div>
-                        </div>
-                      </div>
-                      <div className="border-t border-[#6d1a2b]/10 bg-[#ededf0] p-3 sm:border-l sm:border-t-0 sm:p-4">
-                        <div className="flex items-center justify-between"><span className="font-mono text-[7px] font-bold tracking-[.1em] text-[#5e5e61]">RAPPORT DE SYNTHÈSE</span><FileText size={14} className="text-[#a3253f]" strokeWidth={1.5} /></div>
-                        <div className="mt-4 border border-[#6d1a2b]/10 bg-[#f4f4f7] p-3">
-                          <span className="font-serif text-[10px] font-semibold text-[#2b2b30]">Rapport · exemple</span>
-                          <span className="mt-1 block text-[7px] text-[#8d8d90]">Trame illustrative, sans constat réel</span>
-                          <div className="mt-4 border-l-2 border-[#a3253f]/70 pl-2"><span className="block text-[7px] font-semibold text-[#5e5e61]">Synthèse</span><div className="mt-2 space-y-1.5"><div className="h-1 w-full bg-[#dddde0]" /><div className="h-1 w-[86%] bg-[#dddde0]" /><div className="h-1 w-[70%] bg-[#dddde0]" /></div></div>
-                          <div className="mt-4 border-t border-[#6d1a2b]/10 pt-3"><span className="block text-[7px] font-semibold text-[#5e5e61]">Analyse · Audit · Observations</span><div className="mt-2 space-y-1.5"><div className="h-1 w-full bg-[#dddde0]" /><div className="h-1 w-[77%] bg-[#dddde0]" /></div></div>
-                          <span className="mt-4 block border-t border-[#6d1a2b]/10 pt-2 font-mono text-[6px] tracking-[.06em] text-[#a3253f]">DOCUMENT D’ILLUSTRATION</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
+                  <ul className="grid gap-px bg-[#6d1a2b]/10 sm:grid-cols-2 xl:grid-cols-3">
+                    {features.map(({ title, text, icon: FeatureIcon }) => (
+                      <li key={title} className="domain-feature bg-[#f9f9fc] p-5 md:p-6">
+                        <span className="grid h-8 w-8 place-items-center bg-[#f2e4e7] text-[#6d1a2b]"><FeatureIcon size={15} strokeWidth={1.75} /></span>
+                        <p className="mt-4 text-[14px] font-semibold tracking-[-.01em] text-[#2b2b30]">{title}</p>
+                        <p className="mt-1.5 text-[12px] leading-[1.7] text-[#6a6a6d]">{text}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
             </div>
           </div>
         </section>
