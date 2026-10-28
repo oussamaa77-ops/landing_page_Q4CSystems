@@ -26,12 +26,16 @@ function hashIp(ip: string): string {
   return createHash("sha256").update(ip).digest("hex");
 }
 
+// Resend explains a refusal in the response body (unverified sender domain,
+// recipient not allowed in test mode, invalid key...): keep it for the logs.
+type EmailResult = { ok: true } | { ok: false; reason: string };
+
 async function sendNotificationEmail(
   replyTo: string,
   text: string,
-): Promise<boolean> {
+): Promise<EmailResult> {
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return false;
+  if (!apiKey) return { ok: false, reason: "RESEND_API_KEY is not set" };
 
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -48,7 +52,9 @@ async function sendNotificationEmail(
     }),
   });
 
-  return response.ok;
+  if (response.ok) return { ok: true };
+  const detail = await response.text().catch(() => "");
+  return { ok: false, reason: `Resend HTTP ${response.status}: ${detail.slice(0, 300)}` };
 }
 
 router.post("/contact/demo", async (req, res): Promise<void> => {
@@ -128,12 +134,12 @@ router.post("/contact/demo", async (req, res): Promise<void> => {
 
   let emailSent = false;
   try {
-    emailSent = await sendNotificationEmail(email, body);
-    if (!emailSent) {
+    const result = await sendNotificationEmail(email, body);
+    emailSent = result.ok;
+    if (!result.ok) {
       req.log.error(
-        process.env.RESEND_API_KEY
-          ? "Resend did not accept a Q4C contact request"
-          : "RESEND_API_KEY is not set, no notification email was sent",
+        { reason: result.reason, from: sender, to: recipient },
+        "No notification email was sent for a Q4C contact request",
       );
     }
   } catch (error) {
