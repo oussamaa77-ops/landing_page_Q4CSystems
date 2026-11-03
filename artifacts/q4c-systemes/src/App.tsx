@@ -141,7 +141,7 @@ function DemoForm() {
       <header className="absolute inset-x-0 top-0 z-20 border-b border-[#6d1a2b]/10">
         <div className="q4c-container flex h-[78px] items-center justify-between">
           <a href="#accueil" aria-label="Q4C Systèmes, accueil" className="flex items-center gap-3">
-            <Q4CMark size={38} />
+            <Q4CMark size={42} />
             <span className="leading-tight">
               <span className="block font-serif text-[15px] font-extrabold tracking-[-.04em] text-[#2b2b30]">Q4C Systèmes</span>
               <span className="block text-[8px] font-bold tracking-[.18em] text-[#737376]">COMPTA · FINANCE · AUDIT</span>
@@ -220,7 +220,7 @@ function DemoForm() {
               <div className="absolute left-1/2 top-1/2 hidden h-[205px] w-[205px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-[#6d1a2b]/15 bg-[#f4f4f7]/70 shadow-[0_25px_80px_rgba(30,30,35,.08)] md:grid">
                 <div className="absolute inset-[17px] rounded-full border border-[#6d1a2b]/10" />
                 <div className="relative text-center">
-                  <Q4CMark size={52} className="mx-auto mb-3" />
+                  <Q4CMark size={64} className="mx-auto mb-3" />
                   <span className="block text-[9px] font-bold uppercase tracking-[.19em] text-[#7c7c7f]">Automatiser</span>
                   <span className="mt-1 block font-serif text-[18px] font-semibold tracking-[-.04em] text-[#2b2b30]">le chiffre</span>
                 </div>
@@ -531,7 +531,7 @@ function DemoForm() {
         <div className="q4c-container grid gap-10 py-12 md:grid-cols-[1fr_auto] md:items-end">
           <div>
             <a href="#accueil" className="inline-flex items-center gap-3" data-testid="link-footer-home">
-              <Q4CMark size={38} />
+              <Q4CMark size={42} light />
               <span className="leading-tight"><span className="block font-serif text-[15px] font-extrabold tracking-[-.04em]">Q4C Systèmes</span><span className="block text-[8px] font-bold tracking-[.18em] text-[#bbbbbe]">COMPTA · FINANCE · AUDIT</span></span>
             </a>
             <p className="mt-5 max-w-[420px] text-[11px] leading-[1.75] text-[#b6b6b9]">Éditeur marocain de logiciels pour la finance, la comptabilité et l’audit.</p>
