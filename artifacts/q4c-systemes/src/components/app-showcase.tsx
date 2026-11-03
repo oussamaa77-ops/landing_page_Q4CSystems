@@ -37,6 +37,7 @@ const apps: ShowcaseApp[] = [
       { file: 'clarity_facture_electronqiue.PNG', title: 'Facture électronique', caption: 'Émission et suivi des factures au format électronique.', layout: 'document' },
       { file: 'clarity_journal_general.PNG', title: 'Journal général', caption: 'Les écritures comptables, filtrables par période et par journal.', layout: 'entries' },
       { file: 'clarity_grandlivre.PNG', title: 'Grand livre', caption: 'Le détail des mouvements et des soldes, compte par compte.', layout: 'entries' },
+      { file: 'clarity_rapprochement_bancaire.PNG', title: 'Rapprochement bancaire', caption: 'Chaque ligne du relevé scanné est lettrée avec sa pièce justificative.', layout: 'entries' },
       { file: 'clarity_balance_agee.PNG', title: 'Balance âgée', caption: 'Créances par ancienneté, clients prioritaires et relances.', layout: 'chart' },
       { file: 'clarity_reporting_client&fournisseur.PNG', title: 'Reporting clients & fournisseurs', caption: 'Indicateurs de facturation et de règlement par tiers.', layout: 'chart' },
     ],
